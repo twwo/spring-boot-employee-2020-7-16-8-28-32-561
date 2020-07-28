@@ -45,4 +45,9 @@ public class CompanyController {
         return companies.get(companyIndex).getEmployees();
     }
 
+    @PostMapping
+    public Boolean addCompany(@RequestBody Company company) {
+        return companies.add(company);
+    }
+
 }
