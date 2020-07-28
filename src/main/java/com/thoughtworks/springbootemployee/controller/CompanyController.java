@@ -50,4 +50,12 @@ public class CompanyController {
         return companies.add(company);
     }
 
+    @PutMapping("/{companyIndex}")
+    public Company updateCompanyById(@RequestBody Company company, @PathVariable Integer companyIndex) {
+        companies.get(companyIndex).setCompanyName(company.getCompanyName());
+        companies.get(companyIndex).setEmployees(company.getEmployees());
+        companies.get(companyIndex).setEmployeesNumber(company.getEmployeesNumber());
+        return companies.get(companyIndex);
+    }
+
 }
