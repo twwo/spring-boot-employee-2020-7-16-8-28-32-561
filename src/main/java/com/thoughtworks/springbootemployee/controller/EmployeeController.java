@@ -1,10 +1,7 @@
 package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.model.Employee;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,7 +21,10 @@ public class EmployeeController {
     ));
 
     @GetMapping
-    public List<Employee> getAll() {
+    public List<Employee> getAll(@RequestParam(value = "page", required = false) Integer page
+            , @RequestParam(value = "pageSize", required = false) Integer pageSize) {
+        if (page != null && pageSize != null)
+            employeesData.subList((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
         return employeesData;
     }
 
