@@ -42,4 +42,10 @@ public class EmployeeController {
         return null;
     }
 
+    @PostMapping
+    public Employee addEmployee(@RequestBody Employee employee) {
+        employeesData.add(employee);
+        return employee;
+    }
+
 }
