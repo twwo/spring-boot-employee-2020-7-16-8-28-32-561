@@ -40,4 +40,9 @@ public class CompanyController {
         return companies.get(companyIndex);
     }
 
+    @GetMapping("/{companyIndex}/employees")
+    public List<Employee> getAllEmployeesByCompanyID(@PathVariable Integer companyIndex) {
+        return companies.get(companyIndex).getEmployees();
+    }
+
 }
