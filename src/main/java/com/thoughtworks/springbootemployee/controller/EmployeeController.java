@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/employees")
@@ -22,9 +23,13 @@ public class EmployeeController {
 
     @GetMapping
     public List<Employee> getAll(@RequestParam(value = "page", required = false) Integer page
-            , @RequestParam(value = "pageSize", required = false) Integer pageSize) {
+            , @RequestParam(value = "pageSize", required = false) Integer pageSize
+            , @RequestParam(value = "gender", required = false) String gender) {
+        System.out.println(page);
         if (page != null && pageSize != null)
-            employeesData.subList((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
+            return employeesData.subList((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
+        if (gender != null)
+            return employeesData.stream().filter(employee -> employee.getGender().equals(gender)).collect(Collectors.toList());
         return employeesData;
     }
 
