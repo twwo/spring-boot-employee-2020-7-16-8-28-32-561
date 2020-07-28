@@ -2,6 +2,7 @@ package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.model.Employee;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,6 +26,15 @@ public class EmployeeController {
     @GetMapping
     public List<Employee> getAll() {
         return employeesData;
+    }
+
+    @GetMapping("/{id}")
+    public Employee getOneByID(@PathVariable Integer id) {
+        for (Employee employee : employeesData) {
+            if (employee.getId() == id)
+                return employee;
+        }
+        return null;
     }
 
 }
