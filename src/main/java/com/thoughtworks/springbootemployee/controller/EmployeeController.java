@@ -48,4 +48,23 @@ public class EmployeeController {
         return employee;
     }
 
+    @PutMapping("/{employeeID}")
+    public Employee modifyEmployee(@RequestBody Employee modifiedEmployee, @PathVariable Integer employeeID) {
+        for (Employee employee : employeesData) {
+            if (employee.getId() == employeeID) {
+                employee.setName(modifiedEmployee.getName());
+                employee.setAge(modifiedEmployee.getAge());
+                employee.setGender(modifiedEmployee.getGender());
+                employee.setSalary(modifiedEmployee.getSalary());
+                return employee;
+            }
+        }
+        return null;
+    }
+
+    @DeleteMapping("/{employeeID}")
+    public void deleteEmployee(@PathVariable Integer employeeID) {
+        employeesData.removeIf(employee -> employee.getId() == employeeID);
+    }
+
 }
