@@ -50,6 +50,10 @@ public class CompanyService {
     }
 
     public Company deleteCompanyById(Company company) {
-        return null;
+        Company fetchedCompany = companyRepository.getCompanyById(company.getId());
+        if (fetchedCompany != null) {
+            fetchedCompany = companyRepository.deleteCompanyById(company);
+        }
+        return fetchedCompany;
     }
 }
