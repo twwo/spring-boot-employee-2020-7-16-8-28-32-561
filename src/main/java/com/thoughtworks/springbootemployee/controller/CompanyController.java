@@ -37,9 +37,9 @@ public class CompanyController {
         return companies;
     }
 
-    @GetMapping("/{companyIndex}")
-    public Company getCompanyByCompanyID(@PathVariable Integer companyIndex) {
-        return companies.get(companyIndex);
+    @GetMapping("/{companyID}")
+    public Company getCompanyByCompanyID(@PathVariable Integer companyID) {
+        return companies.stream().filter(company -> company.getId() == companyID).findFirst().get();
     }
 
     @GetMapping("/{companyIndex}/employees")
