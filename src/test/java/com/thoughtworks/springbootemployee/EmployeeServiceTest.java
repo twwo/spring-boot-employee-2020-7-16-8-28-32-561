@@ -95,4 +95,17 @@ public class EmployeeServiceTest {
         assertNotNull(employees);
         assertEquals(5, employees.size());
     }
+
+    @Test
+    void should_return_employees_when_query_by_gender_given_gender_is_male() {
+        //given
+        String gender = "male";
+
+        //when
+        List<Employee> employees = service.getEmployeesByGender(gender);
+
+        //then
+        assertNotNull(employees);
+        assertEquals(4, employees.size());
+    }
 }
