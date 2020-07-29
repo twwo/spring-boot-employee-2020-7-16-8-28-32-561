@@ -143,6 +143,7 @@ public class CompanyServiceTest {
                 new Employee(1, "Quentin", 18, "male", 10000),
                 new Employee(5, "goodboy", 70, "female", 5000)
         )));
+        given(companyRepository.getCompanyById(company.getId())).willReturn(company);
         given(companyRepository.updateCompany(company)).willReturn(company);
 
         //when

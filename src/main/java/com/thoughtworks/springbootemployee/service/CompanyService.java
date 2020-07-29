@@ -39,6 +39,13 @@ public class CompanyService {
     }
 
     public Company updateCompany(Company company) {
-        return null;
+        Company fetchedCompany = companyRepository.getCompanyById(company.getId());
+        if (fetchedCompany != null) {
+            fetchedCompany.setCompanyName(company.getCompanyName());
+            fetchedCompany.setEmployees(company.getEmployees());
+            fetchedCompany.setEmployeesNumber(company.getEmployeesNumber());
+            fetchedCompany = companyRepository.updateCompany(company);
+        }
+        return fetchedCompany;
     }
 }
