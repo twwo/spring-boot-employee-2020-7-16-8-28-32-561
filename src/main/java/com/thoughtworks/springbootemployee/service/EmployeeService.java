@@ -34,6 +34,7 @@ public class EmployeeService {
             updatedEmployee.setAge(employee.getAge());
             updatedEmployee.setGender(employee.getGender());
             updatedEmployee.setSalary(employee.getSalary());
+            updatedEmployee = employeeRepository.updateEmployee(updatedEmployee);
         }
         return updatedEmployee;
     }
@@ -47,7 +48,7 @@ public class EmployeeService {
     }
 
     public List<Employee> getEmployeesByPage(Integer page, Integer pageSize) {
-        return employeeRepository.findEmployeesByPage(page,pageSize);
+        return employeeRepository.findEmployeesByPage(page, pageSize);
     }
 
     public List<Employee> getEmployeesByGender(String gender) {
