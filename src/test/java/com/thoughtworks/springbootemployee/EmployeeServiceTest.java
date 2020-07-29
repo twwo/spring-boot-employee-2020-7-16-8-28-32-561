@@ -3,6 +3,7 @@ package com.thoughtworks.springbootemployee;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -18,11 +19,19 @@ import static org.mockito.Mockito.when;
 
 public class EmployeeServiceTest {
 
+    private EmployeeRepository employeeRepository;
+    private EmployeeService service;
+
+    @BeforeEach
+    void setUp() {
+        employeeRepository = mock(EmployeeRepository.class);
+        service = new EmployeeService(employeeRepository);
+    }
+
     @Test
     void should_return_all_employees_when_get_all_given_none() {
         //given
-        EmployeeRepository employeeRepository = mock(EmployeeRepository.class);
-        EmployeeService service = new EmployeeService(employeeRepository);
+
         given(employeeRepository.getAll()).willReturn(new ArrayList<>());
 
         //when
