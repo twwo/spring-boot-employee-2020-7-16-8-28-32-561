@@ -26,4 +26,8 @@ public class CompanyRepository {
     public Company addCompany(Company company) {
         return null;
     }
+
+    public Company updateCompany(Company company) {
+        return null;
+    }
 }

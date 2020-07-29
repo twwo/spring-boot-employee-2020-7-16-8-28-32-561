@@ -37,4 +37,8 @@ public class CompanyService {
     public Company addCompany(Company company) {
         return companyRepository.addCompany(company);
     }
+
+    public Company updateCompany(Company company) {
+        return null;
+    }
 }

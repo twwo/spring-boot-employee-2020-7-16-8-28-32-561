@@ -131,4 +131,27 @@ public class CompanyServiceTest {
         assertNotNull(addedCompany);
         assertEquals(company.getId(), addedCompany.getId());
     }
+
+    @Test
+    void should_return_updated_company_when_update_company_given_company() {
+        //given
+        Company company = new Company(1, "alibaba", 200, new ArrayList<>(Arrays.asList(
+                new Employee(4, "alibaba1", 20, "male", 6000),
+                new Employee(11, "tengxun2", 19, "female", 7000),
+                new Employee(6, "alibaba3", 19, "male", 8000),
+                new Employee(13, "huawei", 60, "male", 4000),
+                new Employee(1, "Quentin", 18, "male", 10000),
+                new Employee(5, "goodboy", 70, "female", 5000)
+        )));
+        given(companyRepository.updateCompany(company)).willReturn(company);
+
+        //when
+        Company updatedCompany = companyService.updateCompany(company);
+        //then
+        assertNotNull(updatedCompany);
+        assertEquals(company.getId(), updatedCompany.getId());
+        assertEquals(company.getCompanyName(), updatedCompany.getCompanyName());
+        assertEquals(company.getEmployees(), updatedCompany.getEmployees());
+        assertEquals(company.getEmployeesNumber(), updatedCompany.getEmployeesNumber());
+    }
 }
