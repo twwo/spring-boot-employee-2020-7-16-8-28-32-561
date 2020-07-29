@@ -49,6 +49,7 @@ public class EmployeeServiceTest {
         Employee addedEmployee = service.addEmployee(employee);
 
         //then
-        assertEquals(addedEmployee,employee);
+        assertNotNull(addedEmployee);
+        assertEquals(employee, addedEmployee);
     }
 }
