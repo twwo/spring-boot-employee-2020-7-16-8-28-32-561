@@ -32,4 +32,7 @@ public class EmployeeRepository {
         return null;
     }
 
+    public Employee updateEmployee(Employee updatedEmployee) {
+        return null;
+    }
 }
