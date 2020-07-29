@@ -68,4 +68,17 @@ public class EmployeeServiceTest {
         assertEquals(employee.getGender(), updatedEmployee.getGender());
         assertEquals(employee.getSalary(), updatedEmployee.getSalary());
     }
+
+    @Test
+    void should_return_deleted_employee_when_delete_given_id() {
+        //given
+        Integer id = 1;
+
+        //when
+        Employee employee = service.deleteEmployee(id);
+
+        //then
+        assertNotNull(employee);
+        assertEquals(id, employee.getId());
+    }
 }
