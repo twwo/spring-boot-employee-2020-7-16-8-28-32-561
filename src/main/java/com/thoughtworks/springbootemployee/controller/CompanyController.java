@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class CompanyController {
 
     List<Company> companies = new ArrayList<>(Arrays.asList(
-            new Company("alibaba", 200, new ArrayList<>(Arrays.asList(
+            new Company(1, "alibaba", 200, new ArrayList<>(Arrays.asList(
                     new Employee(4, "alibaba1", 20, "male", 6000),
                     new Employee(11, "tengxun2", 19, "female", 7000),
                     new Employee(6, "alibaba3", 19, "male", 8000),
@@ -23,7 +23,7 @@ public class CompanyController {
                     new Employee(1, "Quentin", 18, "male", 10000),
                     new Employee(5, "goodboy", 70, "remale", 5000)
             ))),
-            new Company("tx", 100, new ArrayList<>(Arrays.asList(
+            new Company(2, "tx", 100, new ArrayList<>(Arrays.asList(
                     new Employee(4, "tx", 20, "male", 6000),
                     new Employee(5, "gd", 70, "remale", 5000)
             )))
