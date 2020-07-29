@@ -20,6 +20,6 @@ public class EmployeeService {
     }
 
     public Employee getEmployeeById(Integer id) {
-        return null;
+        return employeeRepository.getEmployeeById(id);
     }
 }
