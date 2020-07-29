@@ -1,15 +1,13 @@
 package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.model.Employee;
-import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/employees")
@@ -27,7 +25,7 @@ public class EmployeeController {
     }
 
     @GetMapping(params = {"page", "pageSize"})
-    public List<Employee> getAllByPage(Integer page, Integer pageSize) {
+    public Page<Employee> getAllByPage(Integer page, Integer pageSize) {
         return service.getEmployeesByPage(page, pageSize);
     }
 
@@ -36,9 +34,9 @@ public class EmployeeController {
         return service.getEmployeesByGender(gender);
     }
 
-    @GetMapping("/{employeeID}")
-    public Employee getEmployeeByID(@PathVariable Integer employeeID) {
-        return service.getEmployeeById(employeeID);
+    @GetMapping("/{employeeId}")
+    public Employee getEmployeeById(@PathVariable Integer employeeId) {
+        return service.getEmployeeById(employeeId);
     }
 
     @PostMapping
@@ -47,15 +45,15 @@ public class EmployeeController {
         return service.addEmployee(employee);
     }
 
-    @PutMapping("/{employeeID}")
-    public Employee modifyEmployee(@RequestBody Employee modifiedEmployee, @PathVariable Integer employeeID) {
-        return service.updateEmployee(employeeID, modifiedEmployee);
+    @PutMapping("/{employeeId}")
+    public Employee modifyEmployee(@RequestBody Employee modifiedEmployee, @PathVariable Integer employeeId) {
+        return service.updateEmployee(employeeId, modifiedEmployee);
     }
 
-    @DeleteMapping("/{employeeID}")
+    @DeleteMapping("/{employeeId}")
     @ResponseStatus(value = HttpStatus.ACCEPTED)
-    public Employee deleteEmployee(@PathVariable Integer employeeID) {
-        return service.deleteEmployee(employeeID);
+    public Employee deleteEmployee(@PathVariable Integer employeeId) {
+        return service.deleteEmployee(employeeId);
     }
 
 }
