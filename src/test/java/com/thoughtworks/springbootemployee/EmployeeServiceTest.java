@@ -64,13 +64,15 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void should_return_updated_employee_when_update_given_employee() {
+    void should_return_updated_employee_when_update_given_employee_and_employeeId_is_1() {
         //given
+        int employeeId = 1;
         Employee employee = new Employee(1, "HHHHHHH", 30, "female", 200);
-        given(employeeRepository.getEmployeeById(employee.getId())).willReturn(new Employee(1, "Quentin", 18, "male", 10000));
+        given(employeeRepository.getEmployeeById(employeeId)).willReturn(employee);
+        given(employeeRepository.updateEmployee(employee)).willReturn(employee);
 
         //when
-        Employee updatedEmployee = service.updateEmployee(employee);
+        Employee updatedEmployee = service.updateEmployee(employeeId, employee);
 
         //then
         assertNotNull(updatedEmployee);
