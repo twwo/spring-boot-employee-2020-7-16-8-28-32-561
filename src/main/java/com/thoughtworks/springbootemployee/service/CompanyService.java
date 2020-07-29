@@ -3,9 +3,13 @@ package com.thoughtworks.springbootemployee.service;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class CompanyService {
 
     private final CompanyRepository companyRepository;
@@ -15,19 +19,19 @@ public class CompanyService {
     }
 
     public List<Company> getAll() {
-        return companyRepository.getAll();
+        return companyRepository.findAll();
     }
 
     public Company getCompanyById(Integer id) {
-        return companyRepository.getCompanyById(id);
+        return companyRepository.findById(id).orElse(null);
     }
 
-    public List<Company> getCompaniesByPage(int page, int pageSize) {
-        return companyRepository.getCompaniesByPage(page, pageSize);
+    public Page<Company> getCompaniesByPage(int page, int pageSize) {
+        return companyRepository.findAll(PageRequest.of(page, pageSize));
     }
 
     public List<Employee> getEmployeesByCompanyId(int companyId) {
-        Company company = companyRepository.getCompanyById(companyId);
+        Company company = companyRepository.findById(companyId).orElse(null);
         if (company != null) {
             return company.getEmployees();
         }
@@ -35,24 +39,24 @@ public class CompanyService {
     }
 
     public Company addCompany(Company company) {
-        return companyRepository.addCompany(company);
+        return companyRepository.save(company);
     }
 
     public Company updateCompany(Integer companyID, Company company) {
-        Company fetchedCompany = companyRepository.getCompanyById(companyID);
+        Company fetchedCompany = companyRepository.findById(companyID).orElse(null);
         if (fetchedCompany != null) {
             fetchedCompany.setCompanyName(company.getCompanyName());
             fetchedCompany.setEmployees(company.getEmployees());
             fetchedCompany.setEmployeesNumber(company.getEmployeesNumber());
-            fetchedCompany = companyRepository.updateCompany(company);
+            fetchedCompany = companyRepository.save(company);
         }
         return fetchedCompany;
     }
 
     public Company deleteCompanyById(Integer companyId) {
-        Company fetchedCompany = companyRepository.getCompanyById(companyId);
+        Company fetchedCompany = companyRepository.findById(companyId).orElse(null);
         if (fetchedCompany != null) {
-            fetchedCompany = companyRepository.deleteCompanyById(fetchedCompany);
+            companyRepository.delete(fetchedCompany);
         }
         return fetchedCompany;
     }

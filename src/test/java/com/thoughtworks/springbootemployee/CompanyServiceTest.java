@@ -5,10 +5,13 @@ import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.service.CompanyService;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -23,7 +26,7 @@ public class CompanyServiceTest {
     @Test
     void should_return_companies_when_getAll_given_none() {
         //given
-        given(companyRepository.getAll()).willReturn(Arrays.asList(
+        given(companyRepository.findAll()).willReturn(Arrays.asList(
                 new Company(1, "alibaba", 200, new ArrayList<>(Arrays.asList(
                         new Employee(4, "alibaba1", 20, "male", 6000),
                         new Employee(11, "tengxun2", 19, "female", 7000),
@@ -49,15 +52,16 @@ public class CompanyServiceTest {
     void should_return_company_when_getCompany_by_id_given_id_is_1() {
         //given
         Integer id = 1;
-        given(companyRepository.getCompanyById(id)).willReturn(
-                new Company(1, "alibaba", 200, new ArrayList<>(Arrays.asList(
+        given(companyRepository.findById(id)).willReturn(
+                Optional.of(
+                        new Company(1, "alibaba", 200, new ArrayList<>(Arrays.asList(
                         new Employee(4, "alibaba1", 20, "male", 6000),
                         new Employee(11, "tengxun2", 19, "female", 7000),
                         new Employee(6, "alibaba3", 19, "male", 8000),
                         new Employee(13, "huawei", 60, "male", 4000),
                         new Employee(1, "Quentin", 18, "male", 10000),
                         new Employee(5, "goodboy", 70, "female", 5000)
-                )))
+                ))))
         );
 
         //when
@@ -72,37 +76,28 @@ public class CompanyServiceTest {
         //given
         int page = 1;
         int pageSize = 1;
-        given(companyRepository.getCompaniesByPage(page, pageSize)).willReturn(Arrays.asList(
-                new Company(1, "alibaba", 200, new ArrayList<>(Arrays.asList(
-                        new Employee(4, "alibaba1", 20, "male", 6000),
-                        new Employee(11, "tengxun2", 19, "female", 7000),
-                        new Employee(6, "alibaba3", 19, "male", 8000),
-                        new Employee(13, "huawei", 60, "male", 4000),
-                        new Employee(1, "Quentin", 18, "male", 10000),
-                        new Employee(5, "goodboy", 70, "female", 5000)
-                )))
-        ));
+        given(companyRepository.findAll(PageRequest.of(page, pageSize))).willReturn(Page.empty());
 
         //when
-        List<Company> companies = companyService.getCompaniesByPage(page, pageSize);
+        Page<Company> companies = companyService.getCompaniesByPage(page, pageSize);
         //then
         assertNotNull(companies);
-        assertEquals(1, companies.size());
     }
 
     @Test
     void should_return_employees_when_getEmployees_by_company_id_given_company_id_is_1() {
         //given
-        Integer companyId = 1;
-        given(companyRepository.getCompanyById(companyId)).willReturn(
-                new Company(1, "alibaba", 200, new ArrayList<>(Arrays.asList(
+        int companyId = 1;
+        given(companyRepository.findById(companyId)).willReturn(
+                Optional.of(
+                        new Company(1, "alibaba", 200, new ArrayList<>(Arrays.asList(
                         new Employee(4, "alibaba1", 20, "male", 6000),
                         new Employee(11, "tengxun2", 19, "female", 7000),
                         new Employee(6, "alibaba3", 19, "male", 8000),
                         new Employee(13, "huawei", 60, "male", 4000),
                         new Employee(1, "Quentin", 18, "male", 10000),
                         new Employee(5, "goodboy", 70, "female", 5000)
-                )))
+                ))))
         );
 
         //when
@@ -123,7 +118,7 @@ public class CompanyServiceTest {
                 new Employee(1, "Quentin", 18, "male", 10000),
                 new Employee(5, "goodboy", 70, "female", 5000)
         )));
-        given(companyRepository.addCompany(company)).willReturn(company);
+        given(companyRepository.save(company)).willReturn(company);
 
         //when
         Company addedCompany = companyService.addCompany(company);
@@ -144,8 +139,8 @@ public class CompanyServiceTest {
                 new Employee(1, "Quentin", 18, "male", 10000),
                 new Employee(5, "goodboy", 70, "female", 5000)
         )));
-        given(companyRepository.getCompanyById(companyId)).willReturn(company);
-        given(companyRepository.updateCompany(company)).willReturn(company);
+        given(companyRepository.findById(companyId)).willReturn(Optional.of(company));
+        given(companyRepository.save(company)).willReturn(company);
 
         //when
         Company updatedCompany = companyService.updateCompany(companyId, company);
@@ -169,8 +164,7 @@ public class CompanyServiceTest {
                 new Employee(1, "Quentin", 18, "male", 10000),
                 new Employee(5, "goodboy", 70, "female", 5000)
         )));
-        given(companyRepository.getCompanyById(companyId)).willReturn(company);
-        given(companyRepository.deleteCompanyById(company)).willReturn(company);
+        given(companyRepository.findById(companyId)).willReturn(Optional.of(company));
 
         //when
         Company deletedCompany = companyService.deleteCompanyById(companyId);

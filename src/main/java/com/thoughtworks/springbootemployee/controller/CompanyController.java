@@ -2,19 +2,22 @@ package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
-import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.service.CompanyService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/companies")
 public class CompanyController {
 
-    private final CompanyService service = new CompanyService(new CompanyRepository());
+    private final CompanyService service;
+
+    public CompanyController(CompanyService service) {
+        this.service = service;
+    }
 
     @GetMapping
     public List<Company> getAll() {
@@ -22,7 +25,7 @@ public class CompanyController {
     }
 
     @GetMapping(params = {"page", "pageSize"})
-    public List<Company> getAllByPage(Integer page, Integer pageSize) {
+    public Page<Company> getAllByPage(Integer page, Integer pageSize) {
         return service.getCompaniesByPage(page, pageSize);
     }
 
