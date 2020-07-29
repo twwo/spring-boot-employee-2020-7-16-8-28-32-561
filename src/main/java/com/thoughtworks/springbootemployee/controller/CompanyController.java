@@ -63,7 +63,8 @@ public class CompanyController {
     }
 
     @DeleteMapping("/{companyIndex}")
-    public Company deleteCompanyByCompanyId(@PathVariable Integer companyIndex) {
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Company deleteCompanyById(@PathVariable Integer companyIndex) {
         return companies.remove(companyIndex.intValue());
     }
 
