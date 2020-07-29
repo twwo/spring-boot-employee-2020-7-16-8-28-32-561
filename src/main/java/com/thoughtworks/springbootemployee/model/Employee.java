@@ -12,7 +12,6 @@ public class Employee {
     private String name;
     private Integer age;
     private String gender;
-    @OneToOne
     private Integer salary;
 
     public Employee() {
