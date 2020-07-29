@@ -46,7 +46,7 @@ public class EmployeeService {
         return deletedEmployee;
     }
 
-    public List<Employee> getEmployeesByPage(int page, int pageSize) {
-        return null;
+    public List<Employee> getEmployeesByPage(Integer page, Integer pageSize) {
+        return employeeRepository.findEmployeesByPage(page,pageSize);
     }
 }
