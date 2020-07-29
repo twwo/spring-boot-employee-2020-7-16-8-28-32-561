@@ -33,4 +33,8 @@ public class CompanyService {
         }
         return null;
     }
+
+    public Company addCompany(Company company) {
+        return null;
+    }
 }

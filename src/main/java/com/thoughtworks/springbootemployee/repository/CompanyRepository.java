@@ -22,4 +22,8 @@ public class CompanyRepository {
     public List<Employee> getEmployeesByCompanyId(Integer companyId) {
         return null;
     }
+
+    public Company addCompany(Company company) {
+        return null;
+    }
 }
