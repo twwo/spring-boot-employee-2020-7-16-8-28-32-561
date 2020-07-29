@@ -37,4 +37,12 @@ public class EmployeeService {
         }
         return updatedEmployee;
     }
+
+    public Employee deleteEmployee(Integer id) {
+        Employee deletedEmployee = employeeRepository.getEmployeeById(id);
+        if (deletedEmployee != null) {
+            employeeRepository.deleteEmployee(deletedEmployee);
+        }
+        return deletedEmployee;
+    }
 }

@@ -31,4 +31,8 @@ public class EmployeeRepository {
         employeesData.add(employee);
         return employee;
     }
+
+    public void deleteEmployee(Employee employee) {
+        employeesData.remove(employee);
+    }
 }
