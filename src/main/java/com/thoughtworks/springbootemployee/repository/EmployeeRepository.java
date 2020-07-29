@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public class EmployeeRepository {
 
-    private List<Employee> employeesData = new ArrayList<>(Arrays.asList(
+    private final List<Employee> employeesData = new ArrayList<>(Arrays.asList(
             new Employee(4, "alibaba1", 20, "male", 6000),
             new Employee(11, "tengxun2", 19, "female", 7000),
             new Employee(6, "alibaba3", 19, "male", 8000),
