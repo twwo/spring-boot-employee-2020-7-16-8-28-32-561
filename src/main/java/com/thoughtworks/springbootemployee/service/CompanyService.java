@@ -38,8 +38,8 @@ public class CompanyService {
         return companyRepository.addCompany(company);
     }
 
-    public Company updateCompany(Company company) {
-        Company fetchedCompany = companyRepository.getCompanyById(company.getId());
+    public Company updateCompany(Integer companyID, Company company) {
+        Company fetchedCompany = companyRepository.getCompanyById(companyID);
         if (fetchedCompany != null) {
             fetchedCompany.setCompanyName(company.getCompanyName());
             fetchedCompany.setEmployees(company.getEmployees());
@@ -49,10 +49,10 @@ public class CompanyService {
         return fetchedCompany;
     }
 
-    public Company deleteCompanyById(Company company) {
-        Company fetchedCompany = companyRepository.getCompanyById(company.getId());
+    public Company deleteCompanyById(Integer companyId) {
+        Company fetchedCompany = companyRepository.getCompanyById(companyId);
         if (fetchedCompany != null) {
-            fetchedCompany = companyRepository.deleteCompanyById(company);
+            fetchedCompany = companyRepository.deleteCompanyById(fetchedCompany);
         }
         return fetchedCompany;
     }
