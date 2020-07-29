@@ -2,6 +2,7 @@ package com.thoughtworks.springbootemployee.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Employee {
@@ -11,6 +12,7 @@ public class Employee {
     private String name;
     private Integer age;
     private String gender;
+    @OneToOne
     private Integer salary;
 
     public Employee() {
