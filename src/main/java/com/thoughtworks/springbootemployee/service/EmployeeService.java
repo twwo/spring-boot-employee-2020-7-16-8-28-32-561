@@ -27,8 +27,8 @@ public class EmployeeService {
         return employeeRepository.addEmployee(employee);
     }
 
-    public Employee updateEmployee(Employee employee) {
-        Employee updatedEmployee = employeeRepository.getEmployeeById(employee.getId());
+    public Employee updateEmployee(Integer employeeID, Employee employee) {
+        Employee updatedEmployee = employeeRepository.getEmployeeById(employeeID);
         if (updatedEmployee != null) {
             updatedEmployee.setName(employee.getName());
             updatedEmployee.setAge(employee.getAge());
