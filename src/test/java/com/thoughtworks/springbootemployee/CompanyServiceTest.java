@@ -155,4 +155,26 @@ public class CompanyServiceTest {
         assertEquals(company.getEmployees(), updatedCompany.getEmployees());
         assertEquals(company.getEmployeesNumber(), updatedCompany.getEmployeesNumber());
     }
+
+    @Test
+    void should_return_deleted_company_when_delete_company_given_company_id_is_1() {
+        //given
+        Integer companyId = 1;
+        Company company = new Company(1, "alibaba", 200, new ArrayList<>(Arrays.asList(
+                new Employee(4, "alibaba1", 20, "male", 6000),
+                new Employee(11, "tengxun2", 19, "female", 7000),
+                new Employee(6, "alibaba3", 19, "male", 8000),
+                new Employee(13, "huawei", 60, "male", 4000),
+                new Employee(1, "Quentin", 18, "male", 10000),
+                new Employee(5, "goodboy", 70, "female", 5000)
+        )));
+        given(companyRepository.getCompanyById(companyId)).willReturn(company);
+        given(companyRepository.deleteCompanyById(company)).willReturn(company);
+
+        //when
+        Company deletedCompany = companyService.deleteCompanyById(company);
+        //then
+        assertNotNull(deletedCompany);
+        assertEquals(company.getId(), deletedCompany.getId());
+    }
 }

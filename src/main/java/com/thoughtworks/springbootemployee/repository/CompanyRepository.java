@@ -30,4 +30,8 @@ public class CompanyRepository {
     public Company updateCompany(Company company) {
         return null;
     }
+
+    public Company deleteCompanyById(Company company) {
+        return null;
+    }
 }

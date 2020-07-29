@@ -48,4 +48,8 @@ public class CompanyService {
         }
         return fetchedCompany;
     }
+
+    public Company deleteCompanyById(Company company) {
+        return null;
+    }
 }
