@@ -22,4 +22,8 @@ public class EmployeeService {
     public Employee getEmployeeById(Integer id) {
         return employeeRepository.getEmployeeById(id);
     }
+
+    public Employee addEmployee(Employee employee) {
+        return null;
+    }
 }

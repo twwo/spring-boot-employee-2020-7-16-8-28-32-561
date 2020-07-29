@@ -39,4 +39,16 @@ public class EmployeeServiceTest {
         assertNotNull(employee);
         assertEquals(id, employee.getId());
     }
+
+    @Test
+    void should_return_employee_when_add_employee_given_employee() {
+        //given
+        Employee employee = new Employee(80, "ggggggg", 20, "male", 100);
+
+        //when
+        Employee addedEmployee = service.addEmployee(employee);
+
+        //then
+        assertEquals(addedEmployee,employee);
+    }
 }
