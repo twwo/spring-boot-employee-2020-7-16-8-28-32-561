@@ -81,4 +81,18 @@ public class EmployeeServiceTest {
         assertNotNull(employee);
         assertEquals(id, employee.getId());
     }
+
+    @Test
+    void should_return_employees_when_query_by_page_given_page_and_pageSize() {
+        //given
+        int page = 1;
+        int pageSize = 5;
+
+        //when
+        List<Employee> employees = service.getEmployeesByPage(page, pageSize);
+
+        //then
+        assertNotNull(employees);
+        assertEquals(5, employees.size());
+    }
 }

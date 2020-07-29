@@ -45,4 +45,8 @@ public class EmployeeService {
         }
         return deletedEmployee;
     }
+
+    public List<Employee> getEmployeesByPage(int page, int pageSize) {
+        return null;
+    }
 }
