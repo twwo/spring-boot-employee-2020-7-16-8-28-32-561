@@ -34,12 +34,8 @@ public class EmployeeController {
     }
 
     @GetMapping("/{employeeID}")
-    public Employee getOneByID(@PathVariable Integer employeeID) {
-        for (Employee employee : employeesData) {
-            if (employee.getId().equals(employeeID))
-                return employee;
-        }
-        return null;
+    public Employee getEmployeeByID(@PathVariable Integer employeeID) {
+        return employeesData.stream().filter(employee -> employee.getId() == employeeID).findFirst().get();
     }
 
     @PostMapping
