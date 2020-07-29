@@ -31,7 +31,6 @@ public class EmployeeServiceTest {
     @Test
     void should_return_all_employees_when_get_all_given_none() {
         //given
-
         given(employeeRepository.getAll()).willReturn(new ArrayList<>());
 
         //when
@@ -39,5 +38,19 @@ public class EmployeeServiceTest {
 
         //then
         assertNotNull(employees);
+    }
+
+    @Test
+    void should_return_employee_when_get_by_id_given_id() {
+        //given
+        int id = 1;
+        given(employeeRepository.getEmployeeById(id)).willReturn(new Employee(1, "ShaoLi", 22, "male", 6000));
+
+        //when
+        Employee employee = service.getEmployeeById(id);
+
+        //then
+        assertNotNull(employee);
+        assertEquals(id, employee.getId());
     }
 }

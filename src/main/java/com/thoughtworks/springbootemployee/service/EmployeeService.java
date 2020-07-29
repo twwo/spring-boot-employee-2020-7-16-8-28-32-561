@@ -8,7 +8,7 @@ import java.util.List;
 
 @Service
 public class EmployeeService {
-    
+
     private EmployeeRepository employeeRepository;
 
     public EmployeeService(EmployeeRepository employeeRepository) {
@@ -17,5 +17,9 @@ public class EmployeeService {
 
     public List<Employee> getAll() {
         return employeeRepository.getAll();
+    }
+
+    public Employee getEmployeeById(Integer id) {
+        return null;
     }
 }

@@ -10,4 +10,8 @@ public class EmployeeRepository {
     public List<Employee> getAll() {
         return null;
     }
+
+    public Employee getEmployeeById(Integer id) {
+        return null;
+    }
 }
