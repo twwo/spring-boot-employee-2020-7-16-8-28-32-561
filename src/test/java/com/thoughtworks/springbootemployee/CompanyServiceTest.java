@@ -44,4 +44,26 @@ public class CompanyServiceTest {
         assertNotNull(companies);
         assertEquals(2, companies.size());
     }
+
+    @Test
+    void should_return_company_when_getCompany_by_id_given_id_is_1() {
+        //given
+        Integer id = 1;
+        given(companyRepository.getCompanyById(id)).willReturn(
+                new Company(1, "alibaba", 200, new ArrayList<>(Arrays.asList(
+                        new Employee(4, "alibaba1", 20, "male", 6000),
+                        new Employee(11, "tengxun2", 19, "female", 7000),
+                        new Employee(6, "alibaba3", 19, "male", 8000),
+                        new Employee(13, "huawei", 60, "male", 4000),
+                        new Employee(1, "Quentin", 18, "male", 10000),
+                        new Employee(5, "goodboy", 70, "female", 5000)
+                )))
+        );
+
+        //when
+        Company company = companyService.getCompanyById(id);
+        //then
+        assertNotNull(company);
+        assertEquals(id, company.getId());
+    }
 }
