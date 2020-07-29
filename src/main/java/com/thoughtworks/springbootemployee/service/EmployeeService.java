@@ -28,6 +28,13 @@ public class EmployeeService {
     }
 
     public Employee updateEmployee(Employee employee) {
-        return null;
+        Employee updatedEmployee = employeeRepository.getEmployeeById(employee.getId());
+        if (updatedEmployee != null) {
+            updatedEmployee.setName(employee.getName());
+            updatedEmployee.setAge(employee.getAge());
+            updatedEmployee.setGender(employee.getGender());
+            updatedEmployee.setSalary(employee.getSalary());
+        }
+        return updatedEmployee;
     }
 }
