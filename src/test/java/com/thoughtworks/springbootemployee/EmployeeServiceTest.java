@@ -51,4 +51,21 @@ public class EmployeeServiceTest {
         assertNotNull(addedEmployee);
         assertEquals(employee, addedEmployee);
     }
+
+    @Test
+    void should_return_updated_employee_when_update_given_employee() {
+        //given
+        Employee employee = new Employee(1, "HHHHHHH", 30, "female", 200);
+
+        //when
+        Employee updatedEmployee = service.updateEmployee(employee);
+
+        //then
+        assertNotNull(updatedEmployee);
+        assertEquals(employee.getId(), updatedEmployee.getId());
+        assertEquals(employee.getName(), updatedEmployee.getName());
+        assertEquals(employee.getAge(), updatedEmployee.getAge());
+        assertEquals(employee.getGender(), updatedEmployee.getGender());
+        assertEquals(employee.getSalary(), updatedEmployee.getSalary());
+    }
 }
