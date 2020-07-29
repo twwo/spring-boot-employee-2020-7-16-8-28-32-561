@@ -39,12 +39,12 @@ public class CompanyController {
 
     @GetMapping("/{companyID}")
     public Company getCompanyByCompanyID(@PathVariable Integer companyID) {
-        return companies.stream().filter(company -> company.getId() == companyID).findFirst().get();
+        return companies.stream().filter(company -> company.getId().equals(companyID)).findFirst().get();
     }
 
     @GetMapping("/{companyID}/employees")
     public List<Employee> getAllEmployeesByCompanyID(@PathVariable Integer companyID) {
-        return companies.stream().filter(company -> company.getId() == companyID).findFirst().get().getEmployees();
+        return companies.stream().filter(company -> company.getId().equals(companyID)).findFirst().get().getEmployees();
     }
 
     @PostMapping
@@ -54,18 +54,25 @@ public class CompanyController {
         return company;
     }
 
-    @PutMapping("/{companyIndex}")
-    public Company updateCompanyById(@RequestBody Company company, @PathVariable Integer companyIndex) {
-        companies.get(companyIndex).setCompanyName(company.getCompanyName());
-        companies.get(companyIndex).setEmployees(company.getEmployees());
-        companies.get(companyIndex).setEmployeesNumber(company.getEmployeesNumber());
-        return companies.get(companyIndex);
+    @PutMapping("/{companyID}")
+    public Company updateCompanyById(@RequestBody Company company, @PathVariable Integer companyID) {
+        Company updatedCompany = companies.stream().filter(fetchConpany -> fetchConpany.getId().equals(companyID)).findFirst().get();
+        updatedCompany.setEmployeesNumber(company.getEmployeesNumber());
+        updatedCompany.setEmployees(company.getEmployees());
+        updatedCompany.setCompanyName(company.getCompanyName());
+        return updatedCompany;
     }
 
-    @DeleteMapping("/{companyIndex}")
+    @DeleteMapping("/{companyID}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public Company deleteCompanyById(@PathVariable Integer companyIndex) {
-        return companies.remove(companyIndex.intValue());
+    public Company deleteCompanyById(@PathVariable Integer companyID) {
+        for (Company company : companies) {
+            if (company.getId().equals(companyID)) {
+                companies.remove(company);
+                return company;
+            }
+        }
+        return null;
     }
 
 }
