@@ -13,4 +13,8 @@ public class CompanyRepository {
     public Company getCompanyById(Integer id) {
         return null;
     }
+
+    public List<Company> getCompaniesByPage(int page, int pageSize) {
+        return null;
+    }
 }

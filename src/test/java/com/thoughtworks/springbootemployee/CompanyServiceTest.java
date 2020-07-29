@@ -66,4 +66,31 @@ public class CompanyServiceTest {
         assertNotNull(company);
         assertEquals(id, company.getId());
     }
+
+    @Test
+    void should_return_companies_when_getAll_by_page_given_page_and_pageSize() {
+        //given
+        int page = 1;
+        int pageSize = 1;
+        given(companyRepository.getCompaniesByPage(page, pageSize)).willReturn(Arrays.asList(
+                new Company(1, "alibaba", 200, new ArrayList<>(Arrays.asList(
+                        new Employee(4, "alibaba1", 20, "male", 6000),
+                        new Employee(11, "tengxun2", 19, "female", 7000),
+                        new Employee(6, "alibaba3", 19, "male", 8000),
+                        new Employee(13, "huawei", 60, "male", 4000),
+                        new Employee(1, "Quentin", 18, "male", 10000),
+                        new Employee(5, "goodboy", 70, "female", 5000)
+                ))),
+                new Company(2, "tx", 100, new ArrayList<>(Arrays.asList(
+                        new Employee(4, "tx", 20, "male", 6000),
+                        new Employee(5, "gd", 70, "remale", 5000)
+                )))
+        ));
+
+        //when
+        List<Company> companies = companyService.getCompaniesByPage(page, pageSize);
+        //then
+        assertNotNull(companies);
+        assertEquals(1, companies.size());
+    }
 }
