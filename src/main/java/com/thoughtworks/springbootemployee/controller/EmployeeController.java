@@ -63,8 +63,8 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/{employeeID}")
-    public void deleteEmployee(@PathVariable Integer employeeID) {
-        employeesData.removeIf(employee -> employee.getId().equals(employeeID));
+    public Boolean deleteEmployee(@PathVariable Integer employeeID) {
+        return employeesData.removeIf(employee -> employee.getId().equals(employeeID));
     }
 
 }
