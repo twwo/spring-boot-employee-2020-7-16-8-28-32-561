@@ -133,8 +133,9 @@ public class CompanyServiceTest {
     }
 
     @Test
-    void should_return_updated_company_when_update_company_given_company() {
+    void should_return_updated_company_when_update_company_given_companyId_is_1() {
         //given
+        Integer companyId = 1;
         Company company = new Company(1, "alibaba", 200, new ArrayList<>(Arrays.asList(
                 new Employee(4, "alibaba1", 20, "male", 6000),
                 new Employee(11, "tengxun2", 19, "female", 7000),
@@ -143,11 +144,11 @@ public class CompanyServiceTest {
                 new Employee(1, "Quentin", 18, "male", 10000),
                 new Employee(5, "goodboy", 70, "female", 5000)
         )));
-        given(companyRepository.getCompanyById(company.getId())).willReturn(company);
+        given(companyRepository.getCompanyById(companyId)).willReturn(company);
         given(companyRepository.updateCompany(company)).willReturn(company);
 
         //when
-        Company updatedCompany = companyService.updateCompany(company);
+        Company updatedCompany = companyService.updateCompany(companyId, company);
         //then
         assertNotNull(updatedCompany);
         assertEquals(company.getId(), updatedCompany.getId());
@@ -172,7 +173,7 @@ public class CompanyServiceTest {
         given(companyRepository.deleteCompanyById(company)).willReturn(company);
 
         //when
-        Company deletedCompany = companyService.deleteCompanyById(company);
+        Company deletedCompany = companyService.deleteCompanyById(companyId);
         //then
         assertNotNull(deletedCompany);
         assertEquals(company.getId(), deletedCompany.getId());
