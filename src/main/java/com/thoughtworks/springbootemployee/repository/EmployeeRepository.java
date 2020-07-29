@@ -3,46 +3,33 @@ package com.thoughtworks.springbootemployee.repository;
 import com.thoughtworks.springbootemployee.model.Employee;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Repository
 public class EmployeeRepository {
 
-    private final List<Employee> employeesData = new ArrayList<>(Arrays.asList(
-            new Employee(4, "alibaba1", 20, "male", 6000),
-            new Employee(11, "tengxun2", 19, "female", 7000),
-            new Employee(6, "alibaba3", 19, "male", 8000),
-            new Employee(13, "huawei", 60, "male", 4000),
-            new Employee(1, "Quentin", 18, "male", 10000),
-            new Employee(5, "goodboy", 70, "remale", 5000)
-    ));
-
     public List<Employee> getAll() {
-        return employeesData;
+        return null;
     }
 
     public Employee getEmployeeById(Integer id) {
-        return employeesData.stream().filter(employee -> id.equals(employee.getId())).findFirst().orElse(null);
+        return null;
     }
 
     public Employee addEmployee(Employee employee) {
-        employeesData.add(employee);
         return employee;
     }
 
     public void deleteEmployee(Employee employee) {
-        employeesData.remove(employee);
+
     }
 
-    public List<Employee> findEmployeesByPage(Integer page, Integer pageSize){
-        return employeesData.stream().skip((page -1)*pageSize).limit(pageSize).collect(Collectors.toList());
+    public List<Employee> findEmployeesByPage(Integer page, Integer pageSize) {
+        return null;
     }
 
     public List<Employee> getEmployeesByGender(String gender) {
-        return employeesData.stream().filter(employee -> gender.equals(employee.getGender())).collect(Collectors.toList());
+        return null;
     }
 
 }
