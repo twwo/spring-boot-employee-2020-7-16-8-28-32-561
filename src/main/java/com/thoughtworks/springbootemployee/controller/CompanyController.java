@@ -42,9 +42,9 @@ public class CompanyController {
         return companies.stream().filter(company -> company.getId() == companyID).findFirst().get();
     }
 
-    @GetMapping("/{companyIndex}/employees")
-    public List<Employee> getAllEmployeesByCompanyID(@PathVariable Integer companyIndex) {
-        return companies.get(companyIndex).getEmployees();
+    @GetMapping("/{companyID}/employees")
+    public List<Employee> getAllEmployeesByCompanyID(@PathVariable Integer companyID) {
+        return companies.stream().filter(company -> company.getId() == companyID).findFirst().get().getEmployees();
     }
 
     @PostMapping
