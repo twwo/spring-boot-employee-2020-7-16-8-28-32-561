@@ -94,14 +94,16 @@ public class CompanyServiceTest {
     void should_return_employees_when_getEmployees_by_company_id_given_company_id_is_1() {
         //given
         Integer companyId = 1;
-        given(companyRepository.getEmployeesByCompanyId(companyId)).willReturn(Arrays.asList(
-                new Employee(4, "alibaba1", 20, "male", 6000),
-                new Employee(11, "tengxun2", 19, "female", 7000),
-                new Employee(6, "alibaba3", 19, "male", 8000),
-                new Employee(13, "huawei", 60, "male", 4000),
-                new Employee(1, "Quentin", 18, "male", 10000),
-                new Employee(5, "goodboy", 70, "female", 5000)
-        ));
+        given(companyRepository.getCompanyById(companyId)).willReturn(
+                new Company(1, "alibaba", 200, new ArrayList<>(Arrays.asList(
+                        new Employee(4, "alibaba1", 20, "male", 6000),
+                        new Employee(11, "tengxun2", 19, "female", 7000),
+                        new Employee(6, "alibaba3", 19, "male", 8000),
+                        new Employee(13, "huawei", 60, "male", 4000),
+                        new Employee(1, "Quentin", 18, "male", 10000),
+                        new Employee(5, "goodboy", 70, "female", 5000)
+                )))
+        );
 
         //when
         List<Employee> employees = companyService.getEmployeesByCompanyId(companyId);

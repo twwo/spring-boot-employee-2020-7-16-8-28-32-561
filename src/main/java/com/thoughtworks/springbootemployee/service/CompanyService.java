@@ -27,6 +27,10 @@ public class CompanyService {
     }
 
     public List<Employee> getEmployeesByCompanyId(int companyId) {
+        Company company = companyRepository.getCompanyById(companyId);
+        if (company != null) {
+            return company.getEmployees();
+        }
         return null;
     }
 }
