@@ -51,7 +51,7 @@ public class EmployeeController {
     @PutMapping("/{employeeID}")
     public Employee modifyEmployee(@RequestBody Employee modifiedEmployee, @PathVariable Integer employeeID) {
         for (Employee employee : employeesData) {
-            if (employee.getId() == employeeID) {
+            if (employee.getId().equals(employeeID)) {
                 employee.setName(modifiedEmployee.getName());
                 employee.setAge(modifiedEmployee.getAge());
                 employee.setGender(modifiedEmployee.getGender());
@@ -64,7 +64,7 @@ public class EmployeeController {
 
     @DeleteMapping("/{employeeID}")
     public void deleteEmployee(@PathVariable Integer employeeID) {
-        employeesData.removeIf(employee -> employee.getId() == employeeID);
+        employeesData.removeIf(employee -> employee.getId().equals(employeeID));
     }
 
 }
