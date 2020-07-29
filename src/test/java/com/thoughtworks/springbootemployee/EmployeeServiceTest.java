@@ -8,8 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class EmployeeServiceTest {
 
@@ -30,7 +29,7 @@ public class EmployeeServiceTest {
     @Test
     void should_return_employee_when_get_by_id_given_id() {
         //given
-        int id = 1;
+        Integer id = 1;
 
         //when
         Employee employee = service.getEmployeeById(id);
