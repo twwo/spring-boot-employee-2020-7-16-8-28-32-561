@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.model.Employee;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -25,9 +26,8 @@ public class EmployeeController {
     public List<Employee> getAll(@RequestParam(value = "page", required = false) Integer page
             , @RequestParam(value = "pageSize", required = false) Integer pageSize
             , @RequestParam(value = "gender", required = false) String gender) {
-        System.out.println(page);
         if (page != null && pageSize != null)
-            return employeesData.subList((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
+            return employeesData.stream().skip((page - 1) * pageSize).limit(pageSize).collect(Collectors.toList());
         if (gender != null)
             return employeesData.stream().filter(employee -> employee.getGender().equals(gender)).collect(Collectors.toList());
         return employeesData;
@@ -43,6 +43,7 @@ public class EmployeeController {
     }
 
     @PostMapping
+    @ResponseStatus(value = HttpStatus.CREATED)
     public Employee addEmployee(@RequestBody Employee employee) {
         employeesData.add(employee);
         return employee;
@@ -63,8 +64,9 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/{employeeID}")
-    public Boolean deleteEmployee(@PathVariable Integer employeeID) {
-        return employeesData.removeIf(employee -> employee.getId().equals(employeeID));
+    @ResponseStatus(value = HttpStatus.ACCEPTED)
+    public void deleteEmployee(@PathVariable Integer employeeID) {
+        employeesData.removeIf(employee -> employee.getId().equals(employeeID));
     }
 
 }
