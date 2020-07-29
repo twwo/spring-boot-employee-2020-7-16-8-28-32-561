@@ -36,7 +36,7 @@ public class EmployeeController {
     @GetMapping("/{id}")
     public Employee getOneByID(@PathVariable Integer id) {
         for (Employee employee : employeesData) {
-            if (employee.getId() == id)
+            if (employee.getId().equals(id))
                 return employee;
         }
         return null;
