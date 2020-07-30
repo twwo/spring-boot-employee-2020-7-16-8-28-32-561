@@ -29,9 +29,10 @@ public class EmployeeService {
         return employeeRepository.save(employee);
     }
 
-    public Employee updateEmployee(Integer employeeID, Employee employee) {
-        Employee updatedEmployee = employeeRepository.findById(employeeID).orElse(null);
+    public Employee updateEmployee(Integer employeeId, Employee employee) {
+        Employee updatedEmployee = employeeRepository.findById(employeeId).orElse(null);
         if (updatedEmployee != null) {
+
             updatedEmployee.setName(employee.getName());
             updatedEmployee.setAge(employee.getAge());
             updatedEmployee.setGender(employee.getGender());
