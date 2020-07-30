@@ -14,8 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.Collections;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -132,4 +131,33 @@ public class EmployeeIntegrationTest {
                 .andExpect(jsonPath("$.companyId").value(1));
 
     }
+
+    @Test
+    void should_update_employee_when_hit_update_employee_given_new_employee() throws Exception {
+        //given
+        Company company = new Company(1, "OOCL", 10000, Collections.emptyList());
+        companyRepository.save(company);
+        Employee employee = new Employee(1, "ShaoLi", 22, "male", 500);
+        employee.setCompanyId(1);
+        employeeRepository.save(employee);
+        String newEmployee = "{\n" +
+                "                \"id\": 1,\n" +
+                "                \"name\": \"Zach\",\n" +
+                "                \"age\": 23,\n" +
+                "                \"gender\": \"female\",\n" +
+                "                \"salary\": 3000,\n" +
+                "                \"companyId\": 1\n" +
+                "            }";
+        //when
+        mockMvc.perform(put("/employees/1").contentType(MediaType.APPLICATION_JSON).content(newEmployee))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").isNumber())
+                .andExpect(jsonPath("$.name").value("Zach"))
+                .andExpect(jsonPath("$.age").value(23))
+                .andExpect(jsonPath("$.gender").value("female"))
+                .andExpect(jsonPath("$.salary").value(3000))
+                .andExpect(jsonPath("$.companyId").value(1));
+    }
+
+
 }
