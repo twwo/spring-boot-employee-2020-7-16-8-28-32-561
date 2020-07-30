@@ -30,13 +30,13 @@ public class CompanyController {
     }
 
     @GetMapping("/{companyID}")
-    public Company getCompanyByCompanyID(@PathVariable Integer companyID) {
-        return service.getCompanyById(companyID);
+    public Company getCompanyByCompanyId(@PathVariable Integer companyId) {
+        return service.getCompanyById(companyId);
     }
 
     @GetMapping("/{companyID}/employees")
-    public List<Employee> getAllEmployeesByCompanyID(@PathVariable Integer companyID) {
-        return service.getEmployeesByCompanyId(companyID);
+    public List<Employee> getAllEmployeesByCompanyId(@PathVariable Integer companyId) {
+        return service.getEmployeesByCompanyId(companyId);
     }
 
     @PostMapping
@@ -46,14 +46,14 @@ public class CompanyController {
     }
 
     @PutMapping("/{companyID}")
-    public Company updateCompanyById(@RequestBody Company company, @PathVariable Integer companyID) {
-        return service.updateCompany(companyID, company);
+    public Company updateCompanyById(@RequestBody Company company, @PathVariable Integer companyId) {
+        return service.updateCompany(companyId, company);
     }
 
     @DeleteMapping("/{companyID}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public Company deleteCompanyById(@PathVariable Integer companyID) {
-        return service.deleteCompanyById(companyID);
+    public Company deleteCompanyById(@PathVariable Integer companyId) {
+        return service.deleteCompanyById(companyId);
     }
 
 }
