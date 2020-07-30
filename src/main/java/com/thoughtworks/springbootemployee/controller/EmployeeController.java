@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.controller;
 
+import com.thoughtworks.springbootemployee.exception.NotSuchDataException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.springframework.data.domain.Page;
@@ -51,7 +52,7 @@ public class EmployeeController {
 
     @DeleteMapping("/{employeeId}")
     @ResponseStatus(value = HttpStatus.ACCEPTED)
-    public Employee deleteEmployee(@PathVariable Integer employeeId) {
+    public Employee deleteEmployee(@PathVariable Integer employeeId) throws NotSuchDataException {
         return service.deleteEmployee(employeeId);
     }
 
