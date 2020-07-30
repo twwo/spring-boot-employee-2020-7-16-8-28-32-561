@@ -62,4 +62,20 @@ public class CompanyIntegrationTest {
                 .andExpect(jsonPath("$.content[0].employeesNumber").value(1))
                 .andExpect(jsonPath("$.content[0].employees", hasSize(1)));
     }
+
+    @Test
+    void should_return_companies_when_hit_get_company_by_id_given_id() throws Exception {
+        //given
+        initCompany();
+
+        //when
+        mockMvc.perform(get("/companies/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.companyName").value("OOCL"))
+                .andExpect(jsonPath("$.employeesNumber").value(1))
+                .andExpect(jsonPath("$.employees",hasSize(1)));
+    }
+
+
 }

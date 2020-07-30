@@ -95,7 +95,7 @@ public class EmployeeIntegrationTest {
         //when
         mockMvc.perform(get("/employees?id=" + id))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id").value(id));
+                .andExpect(jsonPath("$", hasSize(1)));
         //then
     }
 
