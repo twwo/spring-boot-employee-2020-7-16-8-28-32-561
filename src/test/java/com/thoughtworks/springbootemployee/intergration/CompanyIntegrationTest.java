@@ -26,7 +26,7 @@ public class CompanyIntegrationTest {
 
     private void initCompany(){
         Company company = new Company(1,"OOCL",1, Collections.singletonList(
-                new Employee(1, "zach", 18, "male", 1000)
+                new Employee(1, "zach", 18, "male", 1000, 1)
         ));
         companyRepository.save(company);
     }
@@ -77,5 +77,19 @@ public class CompanyIntegrationTest {
                 .andExpect(jsonPath("$.employees",hasSize(1)));
     }
 
+    @Test
+    void should_return_employees_when_hit_get_company_employees_by_id_given_company_id() throws Exception {
+        //given
+        initCompany();
 
+        //when
+        mockMvc.perform(get("/companies/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.employees[0].id").isNumber())
+                .andExpect(jsonPath("$.employees[0].name").value("zach"))
+                .andExpect(jsonPath("$.employees[0].age").value(18))
+                .andExpect(jsonPath("$.employees[0].gender").value("male"))
+                .andExpect(jsonPath("$.employees[0].salary").value(1000))
+                .andExpect(jsonPath("$.employees[0].companyId").value(1));
+    }
 }
