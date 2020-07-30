@@ -30,14 +30,18 @@ public class EmployeeIntegrationTest {
     @Autowired
     private CompanyRepository companyRepository;
 
-    @Test
-    void should_return_employees_when_hit_get_employee_endpoint_given_nothing() throws Exception {
-        //given
+    private void initCompanyAndEmployee() {
         Company company = new Company(1, "OOCL", 10000, Collections.emptyList());
-        Company savedCompany = companyRepository.save(company);
+        companyRepository.save(company);
         Employee employee = new Employee(1, "ShaoLi", 22, "male", 500);
         employee.setCompanyId(1);
         employeeRepository.save(employee);
+    }
+
+    @Test
+    void should_return_employees_when_hit_get_employee_endpoint_given_nothing() throws Exception {
+        //given
+        initCompanyAndEmployee();
 
         //when
         mockMvc.perform(get("/employees"))
@@ -54,11 +58,7 @@ public class EmployeeIntegrationTest {
     @Test
     void should_return_employees_when_hit_get_employee_by_page_endpoint_given_page_and_page_size() throws Exception {
         //given
-        Company company = new Company(1, "OOCL", 10000, Collections.emptyList());
-        Company savedCompany = companyRepository.save(company);
-        Employee employee = new Employee(1, "ShaoLi", 22, "male", 500);
-        employee.setCompanyId(1);
-        employeeRepository.save(employee);
+        initCompanyAndEmployee();
         int page = 1;
         int pageSize = 1;
 
@@ -77,11 +77,7 @@ public class EmployeeIntegrationTest {
     @Test
     void should_return_employee_when_hit_get_employee_by_gender_endpoint_given_gender() throws Exception {
         //given
-        Company company = new Company(1, "OOCL", 10000, Collections.emptyList());
-        Company savedCompany = companyRepository.save(company);
-        Employee employee = new Employee(1, "ShaoLi", 22, "male", 500);
-        employee.setCompanyId(1);
-        employeeRepository.save(employee);
+        initCompanyAndEmployee();
         String gender = "male";
 
         //when
@@ -94,11 +90,7 @@ public class EmployeeIntegrationTest {
     @Test
     void should_return_employee_when_hit_get_employee_by_id_given_id() throws Exception {
         //given
-        Company company = new Company(1, "OOCL", 10000, Collections.emptyList());
-        Company savedCompany = companyRepository.save(company);
-        Employee employee = new Employee(1, "ShaoLi", 22, "male", 500);
-        employee.setCompanyId(1);
-        employeeRepository.save(employee);
+        initCompanyAndEmployee();
         int id = 1;
         //when
         mockMvc.perform(get("/employees?id=" + id))
@@ -135,11 +127,7 @@ public class EmployeeIntegrationTest {
     @Test
     void should_update_employee_when_hit_update_employee_given_new_employee() throws Exception {
         //given
-        Company company = new Company(1, "OOCL", 10000, Collections.emptyList());
-        companyRepository.save(company);
-        Employee employee = new Employee(1, "ShaoLi", 22, "male", 500);
-        employee.setCompanyId(1);
-        employeeRepository.save(employee);
+        initCompanyAndEmployee();
         String newEmployee = "{\n" +
                 "                \"id\": 1,\n" +
                 "                \"name\": \"Zach\",\n" +
@@ -162,11 +150,7 @@ public class EmployeeIntegrationTest {
     @Test
     void should_delete_employee_when_hit_delete_employee_endpoint_given_id() throws Exception {
         //given
-        Company company = new Company(1, "OOCL", 10000, Collections.emptyList());
-        companyRepository.save(company);
-        Employee employee = new Employee(1, "ShaoLi", 22, "male", 500);
-        employee.setCompanyId(1);
-        employeeRepository.save(employee);
+        initCompanyAndEmployee();
         //when
         mockMvc.perform(delete("/employees/1"))
                 .andExpect(status().isAccepted())
