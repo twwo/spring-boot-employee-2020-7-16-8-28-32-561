@@ -9,8 +9,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.Collections;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -26,8 +25,8 @@ public class CompanyIntegrationTest {
     private CompanyRepository companyRepository;
 
     private void initCompany(){
-        Company company = new Company(1,"OOCL",1, Arrays.asList(
-                new Employee(1,"zach",18,"male",1000)
+        Company company = new Company(1,"OOCL",1, Collections.singletonList(
+                new Employee(1, "zach", 18, "male", 1000)
         ));
         companyRepository.save(company);
     }
