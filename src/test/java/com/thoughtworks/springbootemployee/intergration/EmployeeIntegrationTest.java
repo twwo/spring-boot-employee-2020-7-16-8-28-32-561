@@ -74,4 +74,20 @@ public class EmployeeIntegrationTest {
                 .andExpect(jsonPath("$.content[0].companyId").value(1));
     }
 
+    @Test
+    void should_return_employee_when_hit_get_employee_by_gender_endpoint_given_gender() throws Exception {
+        //given
+        Company company = new Company(1, "OOCL", 10000, Collections.emptyList());
+        Company savedCompany = companyRepository.save(company);
+        Employee employee = new Employee(1, "ShaoLi", 22, "male", 500);
+        employee.setCompanyId(1);
+        employeeRepository.save(employee);
+        String gender = "male";
+
+        //when
+        mockMvc.perform(get("/employees?gender=" + gender))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].gender").value(gender));
+
+    }
 }
