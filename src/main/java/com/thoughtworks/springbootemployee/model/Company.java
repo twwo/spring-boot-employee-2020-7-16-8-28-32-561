@@ -7,7 +7,7 @@ import java.util.List;
 public class Company {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String companyName;
     private Integer employeesNumber;
@@ -24,12 +24,12 @@ public class Company {
         this.employeesNumber = employeesNumber;
         this.employees = employees;
     }
-
-    public Company(String companyName, Integer employeesNumber, List<Employee> employees) {
-        this.companyName = companyName;
-        this.employeesNumber = employeesNumber;
-        this.employees = employees;
-    }
+//
+//    public Company(String companyName, Integer employeesNumber, List<Employee> employees) {
+//        this.companyName = companyName;
+//        this.employeesNumber = employeesNumber;
+//        this.employees = employees;
+//    }
 
     public String getCompanyName() {
         return companyName;

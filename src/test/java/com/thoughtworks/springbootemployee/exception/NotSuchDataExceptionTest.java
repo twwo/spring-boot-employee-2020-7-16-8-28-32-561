@@ -1,6 +1,5 @@
 package com.thoughtworks.springbootemployee.exception;
 
-import com.thoughtworks.springbootemployee.exception.NotSuchDataException;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.junit.jupiter.api.Test;
@@ -15,16 +14,9 @@ public class NotSuchDataExceptionTest {
         //given
         EmployeeRepository mockedEmployeeRepository = mock(EmployeeRepository.class);
         EmployeeService employeeService = new EmployeeService(mockedEmployeeRepository);
-
-        Throwable exception = new Exception();
         //when
-        try {
-            employeeService.deleteEmployee(1);
-        } catch (Exception e) {
-            exception = e;
-        }
-//        Throwable exception = assertThrows(NotSuchDataException.class,
-//                () -> employeeService.deleteEmployee(1));
+        Throwable exception = assertThrows(NotSuchDataException.class,
+                () -> employeeService.deleteEmployee(1));
 
         //then
         assertEquals(NotSuchDataException.class, exception.getClass());
