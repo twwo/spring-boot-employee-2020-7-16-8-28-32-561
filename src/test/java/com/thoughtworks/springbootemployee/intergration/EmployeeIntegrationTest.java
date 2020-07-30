@@ -8,14 +8,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -105,5 +106,30 @@ public class EmployeeIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(id));
         //then
+    }
+
+    @Test
+    void should_create_employee_when_hit_add_employee_given_employee() throws Exception {
+        //given
+        Company company = new Company(1, "OOCL", 10000, Collections.emptyList());
+        Company savedCompany = companyRepository.save(company);
+        String employeeInfo = "{\n" +
+                "                \"id\": 1,\n" +
+                "                \"name\": \"ShaoLi\",\n" +
+                "                \"age\": 22,\n" +
+                "                \"gender\": \"male\",\n" +
+                "                \"salary\": 5000,\n" +
+                "                \"companyId\": 1\n" +
+                "            }";
+        //when
+        mockMvc.perform(post("/employees").contentType(MediaType.APPLICATION_JSON).content(employeeInfo))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").isNumber())
+                .andExpect(jsonPath("$.name").value("ShaoLi"))
+                .andExpect(jsonPath("$.age").value(22))
+                .andExpect(jsonPath("$.gender").value("male"))
+                .andExpect(jsonPath("$.salary").value(5000))
+                .andExpect(jsonPath("$.companyId").value(1));
+
     }
 }
