@@ -159,5 +159,22 @@ public class EmployeeIntegrationTest {
                 .andExpect(jsonPath("$.companyId").value(1));
     }
 
-
+    @Test
+    void should_delete_employee_when_hit_delete_employee_endpoint_given_id() throws Exception {
+        //given
+        Company company = new Company(1, "OOCL", 10000, Collections.emptyList());
+        companyRepository.save(company);
+        Employee employee = new Employee(1, "ShaoLi", 22, "male", 500);
+        employee.setCompanyId(1);
+        employeeRepository.save(employee);
+        //when
+        mockMvc.perform(delete("/employees/1"))
+                .andExpect(status().isAccepted())
+                .andExpect(jsonPath("$.id").isNumber())
+                .andExpect(jsonPath("$.name").value("ShaoLi"))
+                .andExpect(jsonPath("$.age").value(22))
+                .andExpect(jsonPath("$.gender").value("male"))
+                .andExpect(jsonPath("$.salary").value(500))
+                .andExpect(jsonPath("$.companyId").value(1));
+    }
 }
