@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee;
 
+import com.thoughtworks.springbootemployee.exception.NotSuchDataException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
@@ -88,7 +89,7 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void should_return_deleted_employee_when_delete_given_id() {
+    void should_return_deleted_employee_when_delete_given_id() throws NotSuchDataException {
         //given
         Integer id = 1;
         given(employeeRepository.findById(id)).willReturn(
