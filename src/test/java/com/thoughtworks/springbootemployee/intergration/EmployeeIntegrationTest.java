@@ -36,9 +36,9 @@ public class EmployeeIntegrationTest {
     @Autowired
     private CompanyRepository companyRepository;
 
-    private Company testCompany = new Company(null, "OOCL", 10000, Collections.emptyList());
+    private final Company testCompany = new Company(null, "OOCL", 10000, Collections.emptyList());
 
-    private List<Employee> testEmployeesData = Arrays.asList(
+    private final List<Employee> testEmployeesData = Arrays.asList(
             new Employee(null, "Shao1", 22, "male", 500, 1),
             new Employee(null, "Shao2", 22, "male", 500, 1),
             new Employee(null, "Shao3", 22, "male", 500, 1),
