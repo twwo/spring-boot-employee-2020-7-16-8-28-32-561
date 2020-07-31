@@ -136,7 +136,6 @@ public class CompanyIntegrationTest {
         Company addedCompany = companyRepository.save(testCompanies.get(0));
 
         //then
-        //200
         mockMvc.perform(delete("/companies/" + addedCompany.getId()).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
