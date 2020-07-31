@@ -13,8 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
@@ -134,5 +133,15 @@ public class EmployeeServiceTest {
         //then
         assertNotNull(employees);
         assertEquals(5, employees.size());
+    }
+
+    @Test
+    void should_throw_exception_when_delete_given_id_not_exists() {
+        //given
+        EmployeeRepository mockedEmployeeRepository = mock(EmployeeRepository.class);
+        EmployeeService employeeService = new EmployeeService(mockedEmployeeRepository);
+        //when
+        assertThrows(NotSuchDataException.class,
+                () -> employeeService.deleteEmployee(1));
     }
 }
