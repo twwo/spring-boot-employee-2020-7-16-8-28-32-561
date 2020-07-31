@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.controller;
 
+import com.thoughtworks.springbootemployee.exception.NotSuchDataException;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.service.CompanyService;
@@ -51,7 +52,7 @@ public class CompanyController {
     }
 
     @DeleteMapping("/{companyId}")
-    public Company deleteCompanyById(@PathVariable Integer companyId) {
+    public Company deleteCompanyById(@PathVariable Integer companyId) throws NotSuchDataException {
         return service.deleteCompanyById(companyId);
     }
 

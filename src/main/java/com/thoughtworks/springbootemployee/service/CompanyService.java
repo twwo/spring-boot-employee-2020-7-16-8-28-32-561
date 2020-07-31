@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.service;
 
+import com.thoughtworks.springbootemployee.exception.NotSuchDataException;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
@@ -53,10 +54,12 @@ public class CompanyService {
         return fetchedCompany;
     }
 
-    public Company deleteCompanyById(Integer companyId) {
+    public Company deleteCompanyById(Integer companyId) throws NotSuchDataException {
         Company fetchedCompany = companyRepository.findById(companyId).orElse(null);
         if (fetchedCompany != null) {
             companyRepository.delete(fetchedCompany);
+        } else {
+            throw new NotSuchDataException();
         }
         return fetchedCompany;
     }
