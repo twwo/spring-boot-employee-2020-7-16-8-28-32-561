@@ -153,4 +153,14 @@ public class EmployeeServiceTest {
         assertThrows(NotSuchDataException.class,
                 () -> employeeService.updateEmployee(1, new Employee()));
     }
+
+    @Test
+    void should_throw_exception_when_update_given_id_not_equals_updated_employee_id() {
+        //given
+        EmployeeRepository mockedEmployeeRepository = mock(EmployeeRepository.class);
+        EmployeeService employeeService = new EmployeeService(mockedEmployeeRepository);
+        //when
+        assertThrows(NotSuchDataException.class,
+                () -> employeeService.updateEmployee(1, new Employee(2, "ShaoLi", 22, "male", 90, 1)));
+    }
 }
