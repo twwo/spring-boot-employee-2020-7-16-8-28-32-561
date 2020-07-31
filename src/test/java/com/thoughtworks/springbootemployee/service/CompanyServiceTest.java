@@ -125,7 +125,7 @@ public class CompanyServiceTest {
     }
 
     @Test
-    void should_return_updated_company_when_update_company_given_companyId_is_1() throws NotSuchDataException {
+    void should_return_updated_company_when_update_company_given_companyId_is_1() throws NotSuchDataException, IllegalOperationException {
         //given
         Integer companyId = 1;
         Company company = new Company(1, "alibaba", 200, new ArrayList<>(Arrays.asList(
