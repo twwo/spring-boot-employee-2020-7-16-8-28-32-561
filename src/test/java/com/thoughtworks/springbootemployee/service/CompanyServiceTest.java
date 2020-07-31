@@ -180,23 +180,23 @@ public class CompanyServiceTest {
                 () -> companyService.deleteCompanyById(1));
     }
 
-//    @Test
-//    void should_throw_exception_when_update_given_id_not_exists() {
-//        //given
-//        CompanyRepository mockedCompanyRepository = mock(CompanyRepository.class);
-//        CompanyService companyService = new CompanyService(mockedCompanyRepository);
-//        //when
-//        assertThrows(NotSuchDataException.class,
-//                () -> companyService.updateCompany(1, new Company()));
-//    }
-//
-//    @Test
-//    void should_throw_exception_when_update_given_id_not_exists() {
-//        //given
-//        CompanyRepository mockedCompanyRepository = mock(CompanyRepository.class);
-//        CompanyService companyService = new CompanyService(mockedCompanyRepository);
-//        //when
-//        assertThrows(IllegalOperationException.class,
-//                () -> companyService.updateCompany(1, new Company(2, "OOCL", 2, Collections.emptyList())));
-//    }
+    @Test
+    void should_throw_exception_when_update_given_id_not_exists() {
+        //given
+        CompanyRepository mockedCompanyRepository = mock(CompanyRepository.class);
+        CompanyService companyService = new CompanyService(mockedCompanyRepository);
+        //when
+        assertThrows(NotSuchDataException.class,
+                () -> companyService.updateCompany(1, new Company()));
+    }
+
+    @Test
+    void should_throw_exception_when_update_given_id_not_equals_updated_employee_id() {
+        //given
+        CompanyRepository mockedCompanyRepository = mock(CompanyRepository.class);
+        CompanyService companyService = new CompanyService(mockedCompanyRepository);
+        //when
+        assertThrows(IllegalOperationException.class,
+                () -> companyService.updateCompany(1, new Company(2, "OOCL", 2, Collections.emptyList())));
+    }
 }
