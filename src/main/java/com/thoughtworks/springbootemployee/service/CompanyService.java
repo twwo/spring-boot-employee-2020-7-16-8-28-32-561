@@ -43,8 +43,9 @@ public class CompanyService {
         return companyRepository.save(company);
     }
 
-    public Company updateCompany(Integer companyID, Company company) throws NotSuchDataException {
-        Company fetchedCompany = companyRepository.findById(companyID).orElse(null);
+    public Company updateCompany(Integer companyId, Company company) throws NotSuchDataException {
+
+        Company fetchedCompany = companyRepository.findById(companyId).orElse(null);
         if (fetchedCompany != null) {
             fetchedCompany.setCompanyName(company.getCompanyName());
             fetchedCompany.setEmployees(company.getEmployees());
