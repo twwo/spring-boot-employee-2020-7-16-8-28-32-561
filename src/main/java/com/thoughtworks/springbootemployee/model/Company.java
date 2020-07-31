@@ -18,7 +18,6 @@ public class Company {
     private Integer id;
     private String companyName;
     private Integer employeesNumber;
-    @OneToMany(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "companyId")
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "companyId")
     private List<Employee> employees;
 }
