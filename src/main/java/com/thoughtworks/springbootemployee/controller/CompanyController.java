@@ -51,7 +51,6 @@ public class CompanyController {
     }
 
     @DeleteMapping("/{companyId}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
     public Company deleteCompanyById(@PathVariable Integer companyId) {
         return service.deleteCompanyById(companyId);
     }

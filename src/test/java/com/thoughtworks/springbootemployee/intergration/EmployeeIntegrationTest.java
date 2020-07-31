@@ -171,7 +171,7 @@ public class EmployeeIntegrationTest {
 
         //when
         mockMvc.perform(delete("/employees/" + addedEmployee.getId()))
-                .andExpect(status().isAccepted());
+                .andExpect(status().isOk());
 
         Employee deleteEmployee = employeeRepository.findById(addedEmployee.getId()).orElse(null);
         assertNull(deleteEmployee);

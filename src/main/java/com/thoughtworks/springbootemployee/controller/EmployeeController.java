@@ -51,7 +51,6 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/{employeeId}")
-    @ResponseStatus(value = HttpStatus.ACCEPTED)
     public Employee deleteEmployee(@PathVariable Integer employeeId) throws NotSuchDataException {
         return service.deleteEmployee(employeeId);
     }
