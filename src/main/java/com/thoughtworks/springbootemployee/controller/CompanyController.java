@@ -47,7 +47,7 @@ public class CompanyController {
     }
 
     @PutMapping("/{companyId}")
-    public Company updateCompanyById(@RequestBody Company company, @PathVariable Integer companyId) {
+    public Company updateCompanyById(@RequestBody Company company, @PathVariable Integer companyId) throws NotSuchDataException {
         return service.updateCompany(companyId, company);
     }
 
