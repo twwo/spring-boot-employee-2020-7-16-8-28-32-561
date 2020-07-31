@@ -31,7 +31,7 @@ public class CompanyIntegrationTest {
     @Autowired
     private CompanyRepository companyRepository;
 
-    private List<Company> testCompanies = Arrays.asList(
+    private final List<Company> testCompanies = Arrays.asList(
             new Company(null, "OOCL", 10000, Collections.singletonList(
                     new Employee(null, "OOCL1", 20, "male", 500, 1))),
             new Company(null, "KFC", 10000, Collections.singletonList(
