@@ -3,7 +3,6 @@ package com.thoughtworks.springbootemployee.service;
 import com.thoughtworks.springbootemployee.exception.NotSuchDataException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
-import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -68,7 +67,7 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void should_return_updated_employee_when_update_given_employee_and_employeeId_is_1() {
+    void should_return_updated_employee_when_update_given_employee_and_employeeId_is_1() throws NotSuchDataException {
         //given
         int employeeId = 1;
         Employee employee = new Employee(1, "HHHHHHH", 30, "female", 200, 1);
@@ -143,5 +142,15 @@ public class EmployeeServiceTest {
         //when
         assertThrows(NotSuchDataException.class,
                 () -> employeeService.deleteEmployee(1));
+    }
+
+    @Test
+    void should_throw_exception_when_update_given_id_not_exists() {
+        //given
+        EmployeeRepository mockedEmployeeRepository = mock(EmployeeRepository.class);
+        EmployeeService employeeService = new EmployeeService(mockedEmployeeRepository);
+        //when
+        assertThrows(NotSuchDataException.class,
+                () -> employeeService.updateEmployee(1, new Employee()));
     }
 }

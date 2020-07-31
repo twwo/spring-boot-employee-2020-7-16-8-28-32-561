@@ -30,7 +30,7 @@ public class EmployeeService {
         return employeeRepository.save(employee);
     }
 
-    public Employee updateEmployee(Integer employeeId, Employee employee) {
+    public Employee updateEmployee(Integer employeeId, Employee employee) throws NotSuchDataException {
         Employee updatedEmployee = employeeRepository.findById(employeeId).orElse(null);
         if (updatedEmployee != null) {
             updatedEmployee.setName(employee.getName());
@@ -38,6 +38,8 @@ public class EmployeeService {
             updatedEmployee.setGender(employee.getGender());
             updatedEmployee.setSalary(employee.getSalary());
             updatedEmployee = employeeRepository.save(updatedEmployee);
+        } else {
+            throw new NotSuchDataException();
         }
         return updatedEmployee;
     }
@@ -46,7 +48,7 @@ public class EmployeeService {
         Employee deletedEmployee = employeeRepository.findById(id).orElse(null);
         if (deletedEmployee != null) {
             employeeRepository.delete(deletedEmployee);
-        }else {
+        } else {
             throw new NotSuchDataException();
         }
         return deletedEmployee;
