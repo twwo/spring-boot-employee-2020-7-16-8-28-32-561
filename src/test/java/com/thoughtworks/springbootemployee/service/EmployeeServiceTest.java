@@ -27,8 +27,8 @@ public class EmployeeServiceTest {
     void should_return_all_employees_when_get_all_given_none() {
         //given
         given(employeeRepository.findAll()).willReturn(new ArrayList<>(Arrays.asList(
-                new Employee(4, "alibaba1", 20, "male", 6000),
-                new Employee(1, "Quentin", 18, "male", 10000)
+                new Employee(4, "alibaba1", 20, "male", 6000, 1),
+                new Employee(1, "Quentin", 18, "male", 10000, 1)
         )));
 
         //when
@@ -44,7 +44,7 @@ public class EmployeeServiceTest {
         //given
         Integer id = 1;
         given(employeeRepository.findById(id))
-                .willReturn(Optional.of(new Employee(1, "Quentin", 18, "male", 10000)));
+                .willReturn(Optional.of(new Employee(1, "Quentin", 18, "male", 10000, 1)));
 
         //when
         Employee employee = service.getEmployeeById(id);
@@ -57,7 +57,7 @@ public class EmployeeServiceTest {
     @Test
     void should_return_employee_when_add_employee_given_employee() {
         //given
-        Employee employee = new Employee(80, "ggggggg", 20, "male", 100);
+        Employee employee = new Employee(80, "ggggggg", 20, "male", 100, 1);
         given(employeeRepository.save(employee)).willReturn(employee);
 
         //when
@@ -72,7 +72,7 @@ public class EmployeeServiceTest {
     void should_return_updated_employee_when_update_given_employee_and_employeeId_is_1() {
         //given
         int employeeId = 1;
-        Employee employee = new Employee(1, "HHHHHHH", 30, "female", 200);
+        Employee employee = new Employee(1, "HHHHHHH", 30, "female", 200, 1);
         given(employeeRepository.findById(employeeId)).willReturn(Optional.of(employee));
         given(employeeRepository.save(employee)).willReturn(employee);
 
@@ -93,7 +93,7 @@ public class EmployeeServiceTest {
         //given
         Integer id = 1;
         given(employeeRepository.findById(id)).willReturn(
-                Optional.of(new Employee(1, "Quentin", 18, "male", 10000)));
+                Optional.of(new Employee(1, "Quentin", 18, "male", 10000, 1)));
 
         //when
         Employee employee = service.deleteEmployee(id);
@@ -122,11 +122,11 @@ public class EmployeeServiceTest {
         //given
         String gender = "male";
         given(employeeRepository.findByGender(gender)).willReturn(Arrays.asList(
-                new Employee(1, "Quentin", 18, "male", 10000),
-                new Employee(2, "Quentin", 18, "male", 10000),
-                new Employee(3, "Quentin", 18, "male", 10000),
-                new Employee(4, "Quentin", 18, "male", 10000),
-                new Employee(5, "Quentin", 18, "male", 10000)
+                new Employee(1, "Quentin", 18, "male", 10000, 1),
+                new Employee(2, "Quentin", 18, "male", 10000, 1),
+                new Employee(3, "Quentin", 18, "male", 10000, 1),
+                new Employee(4, "Quentin", 18, "male", 10000, 1),
+                new Employee(5, "Quentin", 18, "male", 10000, 1)
         ));
         //when
         List<Employee> employees = service.getEmployeesByGender(gender);

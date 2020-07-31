@@ -28,16 +28,16 @@ public class CompanyServiceTest {
         //given
         given(companyRepository.findAll()).willReturn(Arrays.asList(
                 new Company(1, "alibaba", 200, new ArrayList<>(Arrays.asList(
-                        new Employee(4, "alibaba1", 20, "male", 6000),
-                        new Employee(11, "tengxun2", 19, "female", 7000),
-                        new Employee(6, "alibaba3", 19, "male", 8000),
-                        new Employee(13, "huawei", 60, "male", 4000),
-                        new Employee(1, "Quentin", 18, "male", 10000),
-                        new Employee(5, "goodboy", 70, "female", 5000)
+                        new Employee(4, "alibaba1", 20, "male", 6000, 1),
+                        new Employee(11, "tengxun2", 19, "female", 7000, 1),
+                        new Employee(6, "alibaba3", 19, "male", 8000, 1),
+                        new Employee(13, "huawei", 60, "male", 4000, 1),
+                        new Employee(1, "Quentin", 18, "male", 10000, 1),
+                        new Employee(5, "goodboy", 70, "female", 5000, 1)
                 ))),
                 new Company(2, "tx", 100, new ArrayList<>(Arrays.asList(
-                        new Employee(4, "tx", 20, "male", 6000),
-                        new Employee(5, "gd", 70, "remale", 5000)
+                        new Employee(4, "tx", 20, "male", 6000, 2),
+                        new Employee(5, "gd", 70, "remale", 5000, 2)
                 )))
         ));
 
@@ -55,12 +55,12 @@ public class CompanyServiceTest {
         given(companyRepository.findById(id)).willReturn(
                 Optional.of(
                         new Company(1, "alibaba", 200, new ArrayList<>(Arrays.asList(
-                        new Employee(4, "alibaba1", 20, "male", 6000),
-                        new Employee(11, "tengxun2", 19, "female", 7000),
-                        new Employee(6, "alibaba3", 19, "male", 8000),
-                        new Employee(13, "huawei", 60, "male", 4000),
-                        new Employee(1, "Quentin", 18, "male", 10000),
-                        new Employee(5, "goodboy", 70, "female", 5000)
+                        new Employee(4, "alibaba1", 20, "male", 6000, 1),
+                        new Employee(11, "tengxun2", 19, "female", 7000, 1),
+                        new Employee(6, "alibaba3", 19, "male", 8000, 1),
+                        new Employee(13, "huawei", 60, "male", 4000, 1),
+                        new Employee(1, "Quentin", 18, "male", 10000, 1),
+                        new Employee(5, "goodboy", 70, "female", 5000, 1)
                 ))))
         );
 
@@ -91,12 +91,12 @@ public class CompanyServiceTest {
         given(companyRepository.findById(companyId)).willReturn(
                 Optional.of(
                         new Company(1, "alibaba", 200, new ArrayList<>(Arrays.asList(
-                        new Employee(4, "alibaba1", 20, "male", 6000),
-                        new Employee(11, "tengxun2", 19, "female", 7000),
-                        new Employee(6, "alibaba3", 19, "male", 8000),
-                        new Employee(13, "huawei", 60, "male", 4000),
-                        new Employee(1, "Quentin", 18, "male", 10000),
-                        new Employee(5, "goodboy", 70, "female", 5000)
+                        new Employee(4, "alibaba1", 20, "male", 6000, 1),
+                        new Employee(11, "tengxun2", 19, "female", 7000, 1),
+                        new Employee(6, "alibaba3", 19, "male", 8000, 1),
+                        new Employee(13, "huawei", 60, "male", 4000, 1),
+                        new Employee(1, "Quentin", 18, "male", 10000, 1),
+                        new Employee(5, "goodboy", 70, "female", 5000, 1)
                 ))))
         );
 
@@ -111,12 +111,12 @@ public class CompanyServiceTest {
     void should_return_added_company_when_add_company_given_company() {
         //given
         Company company = new Company(1, "alibaba", 200, new ArrayList<>(Arrays.asList(
-                new Employee(4, "alibaba1", 20, "male", 6000),
-                new Employee(11, "tengxun2", 19, "female", 7000),
-                new Employee(6, "alibaba3", 19, "male", 8000),
-                new Employee(13, "huawei", 60, "male", 4000),
-                new Employee(1, "Quentin", 18, "male", 10000),
-                new Employee(5, "goodboy", 70, "female", 5000)
+                new Employee(4, "alibaba1", 20, "male", 6000, 1),
+                new Employee(11, "tengxun2", 19, "female", 7000, 1),
+                new Employee(6, "alibaba3", 19, "male", 8000, 1),
+                new Employee(13, "huawei", 60, "male", 4000, 1),
+                new Employee(1, "Quentin", 18, "male", 10000, 1),
+                new Employee(5, "goodboy", 70, "female", 5000, 1)
         )));
         given(companyRepository.save(company)).willReturn(company);
 
@@ -132,12 +132,12 @@ public class CompanyServiceTest {
         //given
         Integer companyId = 1;
         Company company = new Company(1, "alibaba", 200, new ArrayList<>(Arrays.asList(
-                new Employee(4, "alibaba1", 20, "male", 6000),
-                new Employee(11, "tengxun2", 19, "female", 7000),
-                new Employee(6, "alibaba3", 19, "male", 8000),
-                new Employee(13, "huawei", 60, "male", 4000),
-                new Employee(1, "Quentin", 18, "male", 10000),
-                new Employee(5, "goodboy", 70, "female", 5000)
+                new Employee(4, "alibaba1", 20, "male", 6000, 1),
+                new Employee(11, "tengxun2", 19, "female", 7000, 1),
+                new Employee(6, "alibaba3", 19, "male", 8000, 1),
+                new Employee(13, "huawei", 60, "male", 4000, 1),
+                new Employee(1, "Quentin", 18, "male", 10000, 1),
+                new Employee(5, "goodboy", 70, "female", 5000, 1)
         )));
         given(companyRepository.findById(companyId)).willReturn(Optional.of(company));
         given(companyRepository.save(company)).willReturn(company);
@@ -157,12 +157,12 @@ public class CompanyServiceTest {
         //given
         Integer companyId = 1;
         Company company = new Company(1, "alibaba", 200, new ArrayList<>(Arrays.asList(
-                new Employee(4, "alibaba1", 20, "male", 6000),
-                new Employee(11, "tengxun2", 19, "female", 7000),
-                new Employee(6, "alibaba3", 19, "male", 8000),
-                new Employee(13, "huawei", 60, "male", 4000),
-                new Employee(1, "Quentin", 18, "male", 10000),
-                new Employee(5, "goodboy", 70, "female", 5000)
+                new Employee(4, "alibaba1", 20, "male", 6000, 1),
+                new Employee(11, "tengxun2", 19, "female", 7000, 1),
+                new Employee(6, "alibaba3", 19, "male", 8000, 1),
+                new Employee(13, "huawei", 60, "male", 4000, 1),
+                new Employee(1, "Quentin", 18, "male", 10000, 1),
+                new Employee(5, "goodboy", 70, "female", 5000, 1)
         )));
         given(companyRepository.findById(companyId)).willReturn(Optional.of(company));
 
