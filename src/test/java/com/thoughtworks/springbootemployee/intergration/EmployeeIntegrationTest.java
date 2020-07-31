@@ -87,7 +87,7 @@ public class EmployeeIntegrationTest {
         mockMvc.perform(get("/employees?page=" + page + "&pageSize=" + pageSize))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content", hasSize(pageSize)))
-                .andExpect(jsonPath("$.totalPages").value(page));
+                .andExpect(jsonPath("$.number").value(page - 1));
     }
 
     @Test
