@@ -118,6 +118,7 @@ public class CompanyIntegrationTest {
                 .andExpect(jsonPath("$.id").isNumber())
                 .andExpect(jsonPath("$.companyName").value("blibli"))
                 .andExpect(jsonPath("$.employeesNumber").value(1));
+        //todo compare employee
     }
 
     @Test
@@ -144,6 +145,7 @@ public class CompanyIntegrationTest {
                 .andExpect(jsonPath("$.id").isNumber())
                 .andExpect(jsonPath("$.companyName").value("TW"))
                 .andExpect(jsonPath("$.employeesNumber").value(1));
+        //todo compare employee
     }
 
     @Test
@@ -152,8 +154,10 @@ public class CompanyIntegrationTest {
         initCompany();
 
         //then
+        //200
         mockMvc.perform(delete("/companies/1").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isAccepted())
+                //todo 查员工是否删除
                 .andExpect(jsonPath("$.employees[0].id").isNumber())
                 .andExpect(jsonPath("$.employees[0].name").value("zach"))
                 .andExpect(jsonPath("$.employees[0].age").value(18))

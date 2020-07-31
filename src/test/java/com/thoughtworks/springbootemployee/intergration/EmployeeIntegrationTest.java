@@ -5,6 +5,8 @@ import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -12,7 +14,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -31,10 +35,20 @@ public class EmployeeIntegrationTest {
     @Autowired
     private CompanyRepository companyRepository;
 
-    private void initCompanyAndEmployee() {
-        Company savedCompany = companyRepository.save(new Company(null, "OOCL", 10000, Collections.emptyList()));
-        Employee employee = new Employee(null, "ShaoLi", 22, "male", 500, 1);
-        employeeRepository.save(employee);
+    private Company testCompany = new Company(null, "OOCL", 10000, Collections.emptyList());
+
+    private List<Employee> testEmployeesData = Arrays.asList(
+            new Employee(null, "Shao1", 22, "male", 500, 1),
+            new Employee(null, "Shao2", 22, "male", 500, 1),
+            new Employee(null, "Shao3", 22, "male", 500, 1),
+            new Employee(null, "Shao4", 22, "male", 500, 1),
+            new Employee(null, "Shao5", 22, "male", 500, 1),
+            new Employee(null, "Shao6", 22, "male", 500, 1)
+    );
+
+    @BeforeEach
+    private void init() {
+        companyRepository.save(testCompany);
     }
 
     @AfterEach
@@ -43,23 +57,23 @@ public class EmployeeIntegrationTest {
         companyRepository.deleteAll();
     }
 
-    @Test
-    void should_return_employees_when_hit_get_employee_endpoint_given_nothing() throws Exception {
-        //given
-        initCompanyAndEmployee();
-
-        //when
-        mockMvc.perform(get("/employees"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].id").isNumber())
-                //todo 使用加入数据的内容
-                .andExpect(jsonPath("$[0].name").value("ShaoLi"))
-                .andExpect(jsonPath("$[0].age").value(22))
-                .andExpect(jsonPath("$[0].gender").value("male"))
-                .andExpect(jsonPath("$[0].salary").value(500))
-                .andExpect(jsonPath("$[0].companyId").value(1));
-    }
+//    @Test
+//    void should_return_employees_when_hit_get_employee_endpoint_given_nothing() throws Exception {
+//        //given
+//        Employee employee = testEmployeesData.get(0);
+//        employeeRepository.save(employee);
+//
+//        //when
+//        mockMvc.perform(get("/employees"))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$", hasSize(1)))
+//                .andExpect(jsonPath("$[0].id").isNumber())
+//                .andExpect(jsonPath("$[0].name").value(employee.getName()))
+//                .andExpect(jsonPath("$[0].age").value(employee.getAge()))
+//                .andExpect(jsonPath("$[0].gender").value(employee.getGender()))
+//                .andExpect(jsonPath("$[0].salary").value(employee.getSalary()))
+//                .andExpect(jsonPath("$[0].companyId").value(employee.getCompanyId()));
+//    }
 
 //    @Test
 //    void should_return_employees_when_hit_get_employee_by_page_endpoint_given_page_and_page_size() throws Exception {

@@ -1,0 +1,1 @@
+alter table employee add company_id int
