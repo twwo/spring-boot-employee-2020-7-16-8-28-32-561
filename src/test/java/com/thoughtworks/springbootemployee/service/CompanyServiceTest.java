@@ -181,4 +181,14 @@ public class CompanyServiceTest {
         assertThrows(NotSuchDataException.class,
                 () -> companyService.deleteCompanyById(1));
     }
+
+    @Test
+    void should_throw_exception_when_update_given_id_not_exists() {
+        //given
+        CompanyRepository mockedCompanyRepository = mock(CompanyRepository.class);
+        CompanyService companyService = new CompanyService(mockedCompanyRepository);
+        //when
+        assertThrows(NotSuchDataException.class,
+                () -> companyService.updateCompany(1, new Company()));
+    }
 }
