@@ -32,7 +32,7 @@ public class EmployeeService {
     }
 
     public Employee updateEmployee(Integer employeeId, Employee employee) throws NotSuchDataException, IllegalOperationException {
-        if (employeeId.equals(employee.getId())) {
+        if (!employeeId.equals(employee.getId())) {
             throw new IllegalOperationException();
         }
         Employee updatedEmployee = employeeRepository.findById(employeeId).orElse(null);

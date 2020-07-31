@@ -161,7 +161,7 @@ public class EmployeeServiceTest {
         EmployeeRepository mockedEmployeeRepository = mock(EmployeeRepository.class);
         EmployeeService employeeService = new EmployeeService(mockedEmployeeRepository);
         //when
-        assertThrows(NotSuchDataException.class,
+        assertThrows(IllegalOperationException.class,
                 () -> employeeService.updateEmployee(1, new Employee(2, "ShaoLi", 22, "male", 90, 1)));
     }
 }
