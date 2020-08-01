@@ -12,4 +12,8 @@ public class CompanyMapper {
         company.setEmployees(companyRequest.getEmployees());
         return company;
     }
+
+    public CompanyResponse toCompanyResponse(Company company) {
+        return null;
+    }
 }

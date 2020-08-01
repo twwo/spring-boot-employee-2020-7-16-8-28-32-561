@@ -24,4 +24,20 @@ public class CompanyMapperTest {
         assertEquals(companyRequest.getEmployeesNumber(), company.getEmployeesNumber());
         assertEquals(companyRequest.getEmployees(), company.getEmployees());
     }
+
+    @Test
+    void should_return_companyResponse_when_toCompanyResponse_given_company() {
+        //given
+        CompanyMapper companyMapper = new CompanyMapper();
+        Company company = new Company(1, "OOCL", 1, Collections.emptyList());
+
+        //when
+        CompanyResponse companyResponse = companyMapper.toCompanyResponse(company);
+
+        //then
+        assertEquals(company.getId(), companyResponse.getId());
+        assertEquals(company.getCompanyName(), companyResponse.getCompanyName());
+        assertEquals(company.getEmployeesNumber(), companyResponse.getEmployeesNumber());
+        assertEquals(company.getEmployees(), companyResponse.getEmployees());
+    }
 }
