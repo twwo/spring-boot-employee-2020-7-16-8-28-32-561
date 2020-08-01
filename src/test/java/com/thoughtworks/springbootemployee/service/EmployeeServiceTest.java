@@ -150,9 +150,11 @@ public class EmployeeServiceTest {
         //given
         EmployeeRepository mockedEmployeeRepository = mock(EmployeeRepository.class);
         EmployeeService employeeService = new EmployeeService(mockedEmployeeRepository);
+        Employee employee = new Employee();
+        employee.setId(1);
         //when
         assertThrows(NotSuchDataException.class,
-                () -> employeeService.updateEmployee(1, new Employee()));
+                () -> employeeService.updateEmployee(1, employee));
     }
 
     @Test

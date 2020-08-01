@@ -185,9 +185,11 @@ public class CompanyServiceTest {
         //given
         CompanyRepository mockedCompanyRepository = mock(CompanyRepository.class);
         CompanyService companyService = new CompanyService(mockedCompanyRepository);
+        Company company = new Company();
+        company.setId(1);
         //when
         assertThrows(NotSuchDataException.class,
-                () -> companyService.updateCompany(1, new Company()));
+                () -> companyService.updateCompany(1, company));
     }
 
     @Test
