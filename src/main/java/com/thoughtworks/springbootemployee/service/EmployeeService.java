@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.service;
 
+import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
 import com.thoughtworks.springbootemployee.exception.IllegalOperationException;
 import com.thoughtworks.springbootemployee.exception.NotSuchDataException;
 import com.thoughtworks.springbootemployee.mapper.EmployeeMapper;
@@ -27,8 +28,12 @@ public class EmployeeService {
         return employeeRepository.findAll();
     }
 
-    public Employee getEmployeeById(Integer id) {
-        return employeeRepository.findById(id).orElse(null);
+    public EmployeeResponse getEmployeeById(Integer id) throws NotSuchDataException {
+        Employee employee = employeeRepository.findById(id).orElse(null);
+        if (employee == null) {
+            throw new NotSuchDataException();
+        }
+        return employeeMapper.toEmployeeResponse(employee);
     }
 
     public Employee addEmployee(Employee employee) {
