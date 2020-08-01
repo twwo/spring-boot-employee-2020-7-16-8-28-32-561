@@ -17,6 +17,13 @@ public class EmployeeMapper {
     }
 
     public EmployeeResponse toEmployeeResponse(Employee employee) {
-        return null;
+        EmployeeResponse employeeResponse = new EmployeeResponse();
+        employeeResponse.setId(employee.getId());
+        employeeResponse.setName(employee.getName());
+        employeeResponse.setAge(employee.getAge());
+        employeeResponse.setGender(employee.getGender());
+        employeeResponse.setSalary(employee.getSalary());
+        employeeResponse.setCompanyId(employee.getCompanyId());
+        return employeeResponse;
     }
 }
