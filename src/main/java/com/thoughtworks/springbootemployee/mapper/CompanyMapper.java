@@ -14,6 +14,11 @@ public class CompanyMapper {
     }
 
     public CompanyResponse toCompanyResponse(Company company) {
-        return null;
+        CompanyResponse companyResponse = new CompanyResponse();
+        companyResponse.setId(company.getId());
+        companyResponse.setCompanyName(company.getCompanyName());
+        companyResponse.setEmployeesNumber(company.getEmployeesNumber());
+        companyResponse.setEmployees(company.getEmployees());
+        return companyResponse;
     }
 }
