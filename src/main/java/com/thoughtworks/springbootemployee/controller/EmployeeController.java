@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.controller;
 
+import com.thoughtworks.springbootemployee.dto.EmployeeRequest;
 import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
 import com.thoughtworks.springbootemployee.exception.IllegalOperationException;
 import com.thoughtworks.springbootemployee.exception.NotSuchDataException;
@@ -43,8 +44,8 @@ public class EmployeeController {
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
-    public Employee addEmployee(@RequestBody Employee employee) {
-        return service.addEmployee(employee);
+    public Employee addEmployee(@RequestBody EmployeeRequest employeeRequest) {
+        return service.addEmployee(employeeRequest);
     }
 
     @PutMapping("/{employeeId}")
