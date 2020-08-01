@@ -5,6 +5,13 @@ import com.thoughtworks.springbootemployee.model.Employee;
 
 public class EmployeeMapper {
     public Employee toEmployee(EmployeeRequest employeeRequest) {
-        return null;
+        Employee employee = new Employee();
+        employee.setId(employeeRequest.getId());
+        employee.setName(employeeRequest.getName());
+        employee.setAge(employeeRequest.getAge());
+        employee.setGender(employeeRequest.getGender());
+        employee.setSalary(employeeRequest.getSalary());
+        employee.setCompanyId(employeeRequest.getCompanyId());
+        return employee;
     }
 }
