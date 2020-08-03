@@ -48,9 +48,12 @@ public class EmployeeIntegrationTest {
             new Employee(null, "Shao6", 22, "male", 500, 1)
     );
 
+    private int companyId;
+
     @BeforeEach
     private void init() {
-        companyRepository.save(testCompany);
+        companyId = companyRepository.save(testCompany).getId();
+        System.out.println(companyId);
     }
 
     @AfterEach
@@ -63,6 +66,7 @@ public class EmployeeIntegrationTest {
     void should_return_employees_when_hit_get_employee_endpoint_given_nothing() throws Exception {
         //given
         Employee employee = testEmployeesData.get(0);
+        employee.setCompanyId(companyId);
         employeeRepository.save(employee);
 
         //when
@@ -80,6 +84,7 @@ public class EmployeeIntegrationTest {
     @Test
     void should_return_employees_when_hit_get_employee_by_page_endpoint_given_page_and_page_size() throws Exception {
         //given
+        testEmployeesData.forEach(employee -> employee.setCompanyId(companyId));
         employeeRepository.saveAll(testEmployeesData);
         int page = 2;
         int pageSize = 3;
@@ -95,6 +100,7 @@ public class EmployeeIntegrationTest {
     void should_return_employee_when_hit_get_employee_by_gender_endpoint_given_gender() throws Exception {
         //given
         Employee employee = testEmployeesData.get(0);
+        employee.setCompanyId(companyId);
         employeeRepository.save(employee);
 
         //when
@@ -106,7 +112,9 @@ public class EmployeeIntegrationTest {
     @Test
     void should_return_employee_when_hit_get_employee_by_id_given_id() throws Exception {
         //given
-        Employee addedEmployee = employeeRepository.save(testEmployeesData.get(0));
+        Employee employee = testEmployeesData.get(0);
+        employee.setCompanyId(companyId);
+        Employee addedEmployee = employeeRepository.save(employee);
 
         //when
         mockMvc.perform(get("/employees?id=" + addedEmployee.getId()))
@@ -124,7 +132,7 @@ public class EmployeeIntegrationTest {
                 "                \"age\": 22,\n" +
                 "                \"gender\": \"male\",\n" +
                 "                \"salary\": 5000,\n" +
-                "                \"companyId\": 1\n" +
+                "                \"companyId\": " + companyId + "\n" +
                 "            }";
         //when
         mockMvc.perform(post("/employees").contentType(MediaType.APPLICATION_JSON).content(employeeInfo))
@@ -136,20 +144,20 @@ public class EmployeeIntegrationTest {
         assertEquals(22, addedEmployee.getAge());
         assertEquals("male", addedEmployee.getGender());
         assertEquals(5000, addedEmployee.getSalary());
-        assertEquals(1, addedEmployee.getCompanyId());
+        assertEquals(companyId, addedEmployee.getCompanyId());
     }
 
     @Test
     void should_update_employee_when_hit_update_employee_given_new_employee() throws Exception {
         //given
-        Employee addedEmployee = employeeRepository.save(new Employee(null, "aaa", 0, "female", 500, 1));
+        Employee addedEmployee = employeeRepository.save(new Employee(null, "aaa", 0, "female", 500, companyId));
         String newEmployee = "{\n" +
                 "                \"id\": " + addedEmployee.getId() + ",\n" +
                 "                \"name\": \"ShaoLi\",\n" +
                 "                \"age\": 22,\n" +
                 "                \"gender\": \"male\",\n" +
                 "                \"salary\": 5000,\n" +
-                "                \"companyId\": 1\n" +
+                "                \"companyId\": " + companyId + "\n" +
                 "            }";
         //when
         mockMvc.perform(put("/employees/" + addedEmployee.getId()).contentType(MediaType.APPLICATION_JSON).content(newEmployee))
@@ -162,13 +170,13 @@ public class EmployeeIntegrationTest {
         assertEquals(22, updatedEmployee.getAge());
         assertEquals("male", updatedEmployee.getGender());
         assertEquals(5000, updatedEmployee.getSalary());
-        assertEquals(1, updatedEmployee.getCompanyId());
+        assertEquals(companyId, updatedEmployee.getCompanyId());
     }
 
     @Test
     void should_delete_employee_when_hit_delete_employee_endpoint_given_id() throws Exception {
         //given
-        Employee addedEmployee = employeeRepository.save(new Employee(null, "aaa", 0, "female", 500, 1));
+        Employee addedEmployee = employeeRepository.save(new Employee(null, "aaa", 0, "female", 500, companyId));
 
         //when
         mockMvc.perform(delete("/employees/" + addedEmployee.getId()))
