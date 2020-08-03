@@ -40,12 +40,12 @@ public class EmployeeIntegrationTest {
             null, "OOCL", 10000, Collections.emptyList());
 
     private final List<Employee> testEmployeesData = Arrays.asList(
-            new Employee(null, "Shao1", 22, "male", 500, 1),
-            new Employee(null, "Shao2", 22, "male", 500, 1),
-            new Employee(null, "Shao3", 22, "male", 500, 1),
-            new Employee(null, "Shao4", 22, "male", 500, 1),
-            new Employee(null, "Shao5", 22, "male", 500, 1),
-            new Employee(null, "Shao6", 22, "male", 500, 1)
+            new Employee(null, "Shao1", 22, "male", 500, null),
+            new Employee(null, "Shao2", 22, "male", 500, null),
+            new Employee(null, "Shao3", 22, "male", 500, null),
+            new Employee(null, "Shao4", 22, "male", 500, null),
+            new Employee(null, "Shao5", 22, "male", 500, null),
+            new Employee(null, "Shao6", 22, "male", 500, null)
     );
 
     private int companyId;
