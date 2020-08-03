@@ -1,7 +1,10 @@
 package com.thoughtworks.springbootemployee.service;
 
+import com.thoughtworks.springbootemployee.dto.EmployeeRequest;
+import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
 import com.thoughtworks.springbootemployee.exception.IllegalOperationException;
 import com.thoughtworks.springbootemployee.exception.NotSuchDataException;
+import com.thoughtworks.springbootemployee.mapper.EmployeeMapper;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.Test;
@@ -14,13 +17,15 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 public class EmployeeServiceTest {
 
     private final EmployeeRepository employeeRepository = mock(EmployeeRepository.class);
-    private final EmployeeService service = new EmployeeService(employeeRepository);
+    private final EmployeeMapper employeeMapper = new EmployeeMapper();
+    private final EmployeeService employeeService = new EmployeeService(employeeRepository, employeeMapper);
 
     @Test
     void should_return_all_employees_when_get_all_given_none() {
@@ -31,7 +36,7 @@ public class EmployeeServiceTest {
         )));
 
         //when
-        List<Employee> employees = service.getAll();
+        List<Employee> employees = employeeService.getAll();
 
         //then
         assertNotNull(employees);
@@ -39,28 +44,30 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void should_return_employee_when_get_by_id_given_id() {
+    void should_return_employee_when_get_by_id_given_id() throws NotSuchDataException {
         //given
         Integer id = 1;
         given(employeeRepository.findById(id))
                 .willReturn(Optional.of(new Employee(1, "Quentin", 18, "male", 10000, 1)));
 
         //when
-        Employee employee = service.getEmployeeById(id);
+        EmployeeResponse employeeResponse = employeeService.getEmployeeById(id);
 
         //then
-        assertNotNull(employee);
-        assertEquals(id, employee.getId());
+        assertNotNull(employeeResponse);
+        assertEquals(id, employeeResponse.getId());
     }
 
     @Test
     void should_return_employee_when_add_employee_given_employee() {
         //given
-        Employee employee = new Employee(80, "ggggggg", 20, "male", 100, 1);
-        given(employeeRepository.save(employee)).willReturn(employee);
+        EmployeeRequest employeeRequest = new EmployeeRequest(null, "ggggggg", 20, "male", 100, 1);
+
+        Employee employee = employeeMapper.toEmployee(employeeRequest);
+        given(employeeRepository.save(any(Employee.class))).willReturn(employee);
 
         //when
-        Employee addedEmployee = service.addEmployee(employee);
+        Employee addedEmployee = employeeService.addEmployee(employeeRequest);
 
         //then
         assertNotNull(addedEmployee);
@@ -76,7 +83,7 @@ public class EmployeeServiceTest {
         given(employeeRepository.save(employee)).willReturn(employee);
 
         //when
-        Employee updatedEmployee = service.updateEmployee(employeeId, employee);
+        Employee updatedEmployee = employeeService.updateEmployee(employeeId, employee);
 
         //then
         assertNotNull(updatedEmployee);
@@ -95,7 +102,7 @@ public class EmployeeServiceTest {
                 Optional.of(new Employee(1, "Quentin", 18, "male", 10000, 1)));
 
         //when
-        Employee employee = service.deleteEmployee(id);
+        Employee employee = employeeService.deleteEmployee(id);
 
         //then
         assertNotNull(employee);
@@ -110,7 +117,7 @@ public class EmployeeServiceTest {
         given(employeeRepository.findAll(PageRequest.of(page - 1, pageSize))).willReturn(Page.empty());
 
         //when
-        Page<Employee> employees = service.getEmployeesByPage(page, pageSize);
+        Page<Employee> employees = employeeService.getEmployeesByPage(page, pageSize);
 
         //then
         assertNotNull(employees);
@@ -128,7 +135,7 @@ public class EmployeeServiceTest {
                 new Employee(5, "Quentin", 18, "male", 10000, 1)
         ));
         //when
-        List<Employee> employees = service.getEmployeesByGender(gender);
+        List<Employee> employees = employeeService.getEmployeesByGender(gender);
 
         //then
         assertNotNull(employees);
@@ -138,8 +145,7 @@ public class EmployeeServiceTest {
     @Test
     void should_throw_exception_when_delete_given_id_not_exists() {
         //given
-        EmployeeRepository mockedEmployeeRepository = mock(EmployeeRepository.class);
-        EmployeeService employeeService = new EmployeeService(mockedEmployeeRepository);
+
         //when
         assertThrows(NotSuchDataException.class,
                 () -> employeeService.deleteEmployee(1));
@@ -148,8 +154,6 @@ public class EmployeeServiceTest {
     @Test
     void should_throw_exception_when_update_given_id_not_exists() {
         //given
-        EmployeeRepository mockedEmployeeRepository = mock(EmployeeRepository.class);
-        EmployeeService employeeService = new EmployeeService(mockedEmployeeRepository);
         Employee employee = new Employee();
         employee.setId(1);
         //when
@@ -160,8 +164,7 @@ public class EmployeeServiceTest {
     @Test
     void should_throw_exception_when_update_given_id_not_equals_updated_employee_id() {
         //given
-        EmployeeRepository mockedEmployeeRepository = mock(EmployeeRepository.class);
-        EmployeeService employeeService = new EmployeeService(mockedEmployeeRepository);
+
         //when
         assertThrows(IllegalOperationException.class,
                 () -> employeeService.updateEmployee(1, new Employee(2, "ShaoLi", 22, "male", 90, 1)));
