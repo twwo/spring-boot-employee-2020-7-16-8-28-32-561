@@ -1,7 +1,7 @@
 package com.thoughtworks.springbootemployee.service;
 
-import com.thoughtworks.springbootemployee.exception.IllegalOperationException;
-import com.thoughtworks.springbootemployee.exception.NotSuchDataException;
+import com.thoughtworks.springbootemployee.exception.ExceptionMessage;
+import com.thoughtworks.springbootemployee.exception.GlobalException;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
@@ -24,16 +24,20 @@ public class CompanyService {
         return companyRepository.findAll();
     }
 
-    public Company getCompanyById(Integer id) {
-        return companyRepository.findById(id).orElse(null);
+    public Company getCompanyById(Integer id) throws GlobalException {
+        Company company = companyRepository.findById(id).orElse(null);
+        if (company == null) {
+            throw new GlobalException(ExceptionMessage.NOT_SUCH_DATA.getMessage());
+        }
+        return company;
     }
 
     public Page<Company> getCompaniesByPage(int page, int pageSize) {
         return companyRepository.findAll(PageRequest.of(page - 1, pageSize));
     }
 
-    public List<Employee> getEmployeesByCompanyId(int companyId) {
-        Company company = companyRepository.findById(companyId).orElse(null);
+    public List<Employee> getEmployeesByCompanyId(int companyId) throws GlobalException {
+        Company company = getCompanyById(companyId);
         if (company != null) {
             return company.getEmployees();
         }
@@ -44,29 +48,21 @@ public class CompanyService {
         return companyRepository.save(company);
     }
 
-    public Company updateCompany(Integer companyId, Company company) throws NotSuchDataException, IllegalOperationException {
+    public Company updateCompany(Integer companyId, Company company) throws GlobalException {
         if (!companyId.equals(company.getId())) {
-            throw new IllegalOperationException();
+            throw new GlobalException(ExceptionMessage.ILLEGAL_OPERATION.getMessage());
         }
-        Company fetchedCompany = companyRepository.findById(companyId).orElse(null);
-        if (fetchedCompany != null) {
-            fetchedCompany.setCompanyName(company.getCompanyName());
-            fetchedCompany.setEmployees(company.getEmployees());
-            fetchedCompany.setEmployeesNumber(company.getEmployeesNumber());
-            fetchedCompany = companyRepository.save(company);
-        } else {
-            throw new NotSuchDataException();
-        }
+        Company fetchedCompany = getCompanyById(companyId);
+        fetchedCompany.setCompanyName(company.getCompanyName());
+        fetchedCompany.setEmployees(company.getEmployees());
+        fetchedCompany.setEmployeesNumber(company.getEmployeesNumber());
+        fetchedCompany = companyRepository.save(company);
         return fetchedCompany;
     }
 
-    public Company deleteCompanyById(Integer companyId) throws NotSuchDataException {
-        Company fetchedCompany = companyRepository.findById(companyId).orElse(null);
-        if (fetchedCompany != null) {
-            companyRepository.delete(fetchedCompany);
-        } else {
-            throw new NotSuchDataException();
-        }
+    public Company deleteCompanyById(Integer companyId) throws GlobalException {
+        Company fetchedCompany = getCompanyById(companyId);
+        companyRepository.delete(fetchedCompany);
         return fetchedCompany;
     }
 }

@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.service;
 
+import com.thoughtworks.springbootemployee.exception.GlobalException;
 import com.thoughtworks.springbootemployee.exception.IllegalOperationException;
 import com.thoughtworks.springbootemployee.exception.NotSuchDataException;
 import com.thoughtworks.springbootemployee.model.Company;
@@ -46,7 +47,7 @@ public class CompanyServiceTest {
     }
 
     @Test
-    void should_return_company_when_getCompany_by_id_given_id_is_1() {
+    void should_return_company_when_getCompany_by_id_given_id_is_1() throws GlobalException {
         //given
         Integer id = 1;
         given(companyRepository.findById(id)).willReturn(
@@ -82,7 +83,7 @@ public class CompanyServiceTest {
     }
 
     @Test
-    void should_return_employees_when_getEmployees_by_company_id_given_company_id_is_1() {
+    void should_return_employees_when_getEmployees_by_company_id_given_company_id_is_1() throws GlobalException {
         //given
         int companyId = 1;
         given(companyRepository.findById(companyId)).willReturn(
@@ -125,7 +126,7 @@ public class CompanyServiceTest {
     }
 
     @Test
-    void should_return_updated_company_when_update_company_given_companyId_is_1() throws NotSuchDataException, IllegalOperationException {
+    void should_return_updated_company_when_update_company_given_companyId_is_1() throws GlobalException {
         //given
         Integer companyId = 1;
         Company company = new Company(1, "alibaba", 200, new ArrayList<>(Arrays.asList(
@@ -150,7 +151,7 @@ public class CompanyServiceTest {
     }
 
     @Test
-    void should_return_deleted_company_when_delete_company_given_company_id_is_1() throws NotSuchDataException {
+    void should_return_deleted_company_when_delete_company_given_company_id_is_1() throws GlobalException {
         //given
         Integer companyId = 1;
         Company company = new Company(1, "alibaba", 200, new ArrayList<>(Arrays.asList(
@@ -176,7 +177,7 @@ public class CompanyServiceTest {
         CompanyRepository mockedCompanyRepository = mock(CompanyRepository.class);
         CompanyService companyService = new CompanyService(mockedCompanyRepository);
         //when
-        assertThrows(NotSuchDataException.class,
+        assertThrows(GlobalException.class,
                 () -> companyService.deleteCompanyById(1));
     }
 
@@ -188,7 +189,7 @@ public class CompanyServiceTest {
         Company company = new Company();
         company.setId(1);
         //when
-        assertThrows(NotSuchDataException.class,
+        assertThrows(GlobalException.class,
                 () -> companyService.updateCompany(1, company));
     }
 
@@ -198,7 +199,7 @@ public class CompanyServiceTest {
         CompanyRepository mockedCompanyRepository = mock(CompanyRepository.class);
         CompanyService companyService = new CompanyService(mockedCompanyRepository);
         //when
-        assertThrows(IllegalOperationException.class,
+        assertThrows(GlobalException.class,
                 () -> companyService.updateCompany(1, new Company(2, "OOCL", 2, Collections.emptyList())));
     }
 }
