@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class EmployeeMapper {
     public Employee toEmployee(EmployeeRequest employeeRequest) {
+        //todo BeanUtils
         Employee employee = new Employee();
         employee.setId(employeeRequest.getId());
         employee.setName(employeeRequest.getName());

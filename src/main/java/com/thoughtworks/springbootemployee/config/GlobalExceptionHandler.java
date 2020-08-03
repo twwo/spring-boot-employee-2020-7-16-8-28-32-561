@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.config;
 
+import com.thoughtworks.springbootemployee.exception.GlobalException;
 import com.thoughtworks.springbootemployee.exception.IllegalOperationException;
 import com.thoughtworks.springbootemployee.exception.NotSuchDataException;
 import org.springframework.http.HttpStatus;
@@ -22,5 +23,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(IllegalOperationException.class)
     String handleIllegalOperationException() {
         return "illegal operation";
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(GlobalException.class)
+    String handleGlobalException(GlobalException exception) {
+        return exception.getMessage();
     }
 }
