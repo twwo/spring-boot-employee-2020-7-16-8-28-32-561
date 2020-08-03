@@ -2,6 +2,7 @@ package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.dto.EmployeeRequest;
 import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
+import com.thoughtworks.springbootemployee.exception.GlobalException;
 import com.thoughtworks.springbootemployee.exception.IllegalOperationException;
 import com.thoughtworks.springbootemployee.exception.NotSuchDataException;
 import com.thoughtworks.springbootemployee.model.Employee;
@@ -38,7 +39,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/{employeeId}")
-    public EmployeeResponse getEmployeeById(@PathVariable Integer employeeId) throws NotSuchDataException {
+    public EmployeeResponse getEmployeeById(@PathVariable Integer employeeId) throws GlobalException {
         return service.getEmployeeById(employeeId);
     }
 
@@ -49,12 +50,12 @@ public class EmployeeController {
     }
 
     @PutMapping("/{employeeId}")
-    public Employee modifyEmployee(@RequestBody Employee modifiedEmployee, @PathVariable Integer employeeId) throws NotSuchDataException, IllegalOperationException {
+    public Employee modifyEmployee(@RequestBody Employee modifiedEmployee, @PathVariable Integer employeeId) throws GlobalException {
         return service.updateEmployee(employeeId, modifiedEmployee);
     }
 
     @DeleteMapping("/{employeeId}")
-    public Employee deleteEmployee(@PathVariable Integer employeeId) throws NotSuchDataException {
+    public Employee deleteEmployee(@PathVariable Integer employeeId) throws GlobalException {
         return service.deleteEmployee(employeeId);
     }
 

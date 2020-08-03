@@ -2,8 +2,7 @@ package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.dto.EmployeeRequest;
 import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
-import com.thoughtworks.springbootemployee.exception.IllegalOperationException;
-import com.thoughtworks.springbootemployee.exception.NotSuchDataException;
+import com.thoughtworks.springbootemployee.exception.GlobalException;
 import com.thoughtworks.springbootemployee.mapper.EmployeeMapper;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
@@ -44,7 +43,7 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void should_return_employee_when_get_by_id_given_id() throws NotSuchDataException {
+    void should_return_employee_when_get_by_id_given_id() throws GlobalException {
         //given
         Integer id = 1;
         given(employeeRepository.findById(id))
@@ -75,7 +74,7 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void should_return_updated_employee_when_update_given_employee_and_employeeId_is_1() throws NotSuchDataException, IllegalOperationException {
+    void should_return_updated_employee_when_update_given_employee_and_employeeId_is_1() throws GlobalException {
         //given
         int employeeId = 1;
         Employee employee = new Employee(1, "HHHHHHH", 30, "female", 200, 1);
@@ -95,7 +94,7 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void should_return_deleted_employee_when_delete_given_id() throws NotSuchDataException {
+    void should_return_deleted_employee_when_delete_given_id() throws GlobalException {
         //given
         Integer id = 1;
         given(employeeRepository.findById(id)).willReturn(
@@ -147,7 +146,7 @@ public class EmployeeServiceTest {
         //given
 
         //when
-        assertThrows(NotSuchDataException.class,
+        assertThrows(GlobalException.class,
                 () -> employeeService.deleteEmployee(1));
     }
 
@@ -157,7 +156,7 @@ public class EmployeeServiceTest {
         Employee employee = new Employee();
         employee.setId(1);
         //when
-        assertThrows(NotSuchDataException.class,
+        assertThrows(GlobalException.class,
                 () -> employeeService.updateEmployee(1, employee));
     }
 
@@ -166,7 +165,7 @@ public class EmployeeServiceTest {
         //given
 
         //when
-        assertThrows(IllegalOperationException.class,
+        assertThrows(GlobalException.class,
                 () -> employeeService.updateEmployee(1, new Employee(2, "ShaoLi", 22, "male", 90, 1)));
     }
 }
