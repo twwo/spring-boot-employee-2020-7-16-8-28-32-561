@@ -1,8 +1,10 @@
 package com.thoughtworks.springbootemployee.intergration;
 
+import com.thoughtworks.springbootemployee.dto.EmployeeRequest;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
+import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,18 +33,28 @@ public class CompanyIntegrationTest {
     @Autowired
     private CompanyRepository companyRepository;
 
+    @Autowired
+    private EmployeeRepository employeeRepository;
+
     private final List<Company> testCompanies = Arrays.asList(
-            new Company(null, "OOCL", 10000, Collections.singletonList(
-                    new Employee(null, "OOCL1", 20, "male", 500, 1))),
-            new Company(null, "KFC", 10000, Collections.singletonList(
-                    new Employee(null, "KFC1", 22, "male", 500, 2))),
-            new Company(null, "Alibaba", 10000, Collections.singletonList(
-                    new Employee(null, "Alibaba1", 22, "male", 500, 3)))
+            new Company(null, "OOCL", 10000, Collections.emptyList()),
+            new Company(null, "KFC", 10000, Collections.emptyList()),
+            new Company(null, "Alibaba", 10000, Collections.emptyList())
+    );
+
+    private final List<Employee> testEmployeesData = Arrays.asList(
+            new Employee(null, "Shao1", 22, "male", 500, null),
+            new Employee(null, "Shao2", 22, "male", 500, null),
+            new Employee(null, "Shao3", 22, "male", 500, null),
+            new Employee(null, "Shao4", 22, "male", 500, null),
+            new Employee(null, "Shao5", 22, "male", 500, null),
+            new Employee(null, "Shao6", 22, "male", 500, null)
     );
 
     @AfterEach
     private void afterAll() {
         companyRepository.deleteAll();
+        employeeRepository.deleteAll();
     }
 
     @Test
@@ -86,22 +98,30 @@ public class CompanyIntegrationTest {
     void should_return_employees_when_hit_get_company_employees_by_id_given_company_id() throws Exception {
         //given
         Company addedCompany = companyRepository.save(testCompanies.get(0));
+        Employee employee = testEmployeesData.get(0);
+        employee.setCompanyId(addedCompany.getId());
+        employeeRepository.save(employee);
 
         //when
         mockMvc.perform(get("/companies/" + addedCompany.getId()))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.employees[0]").value(addedCompany.getEmployees().get(0)));
+                .andExpect(jsonPath("$.employees[0].id").isNumber())
+                .andExpect(jsonPath("$.employees[0].name").value(employee.getName()))
+                .andExpect(jsonPath("$.employees[0].age").value(employee.getAge()))
+                .andExpect(jsonPath("$.employees[0].gender").value(employee.getGender()))
+                .andExpect(jsonPath("$.employees[0].salary").value(employee.getSalary()))
+                .andExpect(jsonPath("$.employees[0].companyId").value(employee.getCompanyId()));
     }
 
     @Test
     void should_return_company_when_hit_add_company_endpoint_given_company() throws Exception {
         //given
-        String comanyInfo = "{\n" +
+        String companyInfo = "{\n" +
                 "    \"companyName\": \"bilibili\",\n" +
                 "    \"employeesNumber\": 1\n" +
                 "}";
         //then
-        mockMvc.perform(post("/companies").contentType(MediaType.APPLICATION_JSON).content(comanyInfo))
+        mockMvc.perform(post("/companies").contentType(MediaType.APPLICATION_JSON).content(companyInfo))
                 .andExpect(status().isCreated());
 
         Company addedCompany = companyRepository.findAll().get(0);
@@ -120,7 +140,7 @@ public class CompanyIntegrationTest {
                 "    \"employeesNumber\": 3\n" +
                 "}";
         //then
-        mockMvc.perform(put("/companies/1").contentType(MediaType.APPLICATION_JSON).content(comanyInfo))
+        mockMvc.perform(put("/companies/" + addedCompany.getId()).contentType(MediaType.APPLICATION_JSON).content(comanyInfo))
                 .andExpect(status().isOk());
 
         Company updatedCompany = companyRepository.findById(addedCompany.getId()).orElse(null);
